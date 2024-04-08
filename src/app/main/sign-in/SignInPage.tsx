@@ -1,44 +1,35 @@
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import CardContent from '@mui/material/CardContent';
-import _ from '@lodash';
 import Alert from '@mui/material/Alert';
-import Button from '@mui/material/Button';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import JwtLoginTab from './tabs/JwtSignInTab';
-import FirebaseSignInTab from './tabs/FirebaseSignInTab';
 
-const tabs = [
-	{
-		id: 'jwt',
-		title: 'JWT',
-		logo: 'assets/images/logo/jwt.svg',
-		logoClass: 'h-40 p-4 bg-black rounded-12'
-	},
-	{
-		id: 'firebase',
-		title: 'Firebase',
-		logo: 'assets/images/logo/firebase.svg',
-		logoClass: 'h-40'
-	}
-];
+// const tabs = [
+// 	{
+// 		id: 'jwt',
+// 		title: 'JWT',
+// 		logo: 'assets/images/logo/jwt.svg',
+// 		logoClass: 'h-40 p-4 bg-black rounded-12'
+// 	},
+// 	{
+// 		id: 'firebase',
+// 		title: 'Firebase',
+// 		logo: 'assets/images/logo/firebase.svg',
+// 		logoClass: 'h-40'
+// 	}
+// ];
 
 /**
  * The sign in page.
  */
 function SignInPage() {
-	const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
+	// const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
 
-	function handleSelectTab(id: string) {
-		setSelectedTabId(id);
-	}
+	// function handleSelectTab(id: string) {
+	// 	setSelectedTabId(id);
+	// }
 
 	return (
 		<div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start">
@@ -68,11 +59,10 @@ function SignInPage() {
 						severity="info"
 						className="mt-24 px-16 text-13 leading-relaxed"
 					>
-						You are browsing <b>Fuse React Demo</b>. Click on the "Sign in" button to access the Demo and
-						Documentation.
+						Click on the "Sign in" button to inter the app.
 					</Alert>
 
-					<Tabs
+					{/* <Tabs
 						value={_.findIndex(tabs, { id: selectedTabId })}
 						variant="fullWidth"
 						className="w-full mt-24 mb-32"
@@ -93,12 +83,12 @@ function SignInPage() {
 								label={item.title}
 							/>
 						))}
-					</Tabs>
-
+					</Tabs> */}
+					{/* 
 					{selectedTabId === 'jwt' && <JwtLoginTab />}
-					{selectedTabId === 'firebase' && <FirebaseSignInTab />}
-
-					<div className="mt-32 flex items-center">
+					{selectedTabId === 'firebase' && <FirebaseSignInTab />} */}
+					<JwtLoginTab />
+					{/* <div className="mt-32 flex items-center">
 						<div className="mt-px flex-auto border-t" />
 						<Typography
 							className="mx-8"
@@ -143,7 +133,7 @@ function SignInPage() {
 								feather:github
 							</FuseSvgIcon>
 						</Button>
-					</div>
+					</div> */}
 				</CardContent>
 			</Paper>
 
@@ -218,12 +208,12 @@ function SignInPage() {
 						<div>Welcome to</div>
 						<div>our community</div>
 					</div>
-					<div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
+					{/* <div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
 						Fuse helps developers to build organized and well coded dashboards full of beautiful and rich
 						modules. Join us and start building your application today.
-					</div>
+					</div> */}
 					<div className="mt-32 flex items-center">
-						<AvatarGroup
+						{/* <AvatarGroup
 							sx={{
 								'& .MuiAvatar-root': {
 									borderColor: 'primary.main'
@@ -234,7 +224,7 @@ function SignInPage() {
 							<Avatar src="assets/images/avatars/female-11.jpg" />
 							<Avatar src="assets/images/avatars/male-09.jpg" />
 							<Avatar src="assets/images/avatars/male-16.jpg" />
-						</AvatarGroup>
+						</AvatarGroup> */}
 
 						<div className="ml-16 font-medium tracking-tight text-gray-400">
 							More than 17k people joined us, it's your turn
