@@ -1,40 +1,33 @@
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { useState } from 'react';
-import _ from '../../../@lodash/@lodash';
 import JwtSignUpTab from './tabs/JwSignUpTab';
-import FirebaseSignUpTab from './tabs/FirebaseSignUpTab';
 
-const tabs = [
-	{
-		id: 'jwt',
-		title: 'JWT',
-		logo: 'assets/images/logo/jwt.svg',
-		logoClass: 'h-40 p-4 bg-black rounded-12'
-	},
-	{
-		id: 'firebase',
-		title: 'Firebase',
-		logo: 'assets/images/logo/firebase.svg',
-		logoClass: 'h-40'
-	}
-];
+// const tabs = [
+// 	{
+// 		id: 'jwt',
+// 		title: 'JWT',
+// 		logo: 'assets/images/logo/jwt.svg',
+// 		logoClass: 'h-40 p-4 bg-black rounded-12'
+// 	},
+// 	{
+// 		id: 'firebase',
+// 		title: 'Firebase',
+// 		logo: 'assets/images/logo/firebase.svg',
+// 		logoClass: 'h-40'
+// 	}
+// ];
 
 /**
  * The sign up page.
  */
 function SignUpPage() {
-	const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
+	// const [selectedTabId, setSelectedTabId] = useState(tabs[0].id);
 
-	function handleSelectTab(id: string) {
-		setSelectedTabId(id);
-	}
+	// function handleSelectTab(id: string) {
+	// 	setSelectedTabId(id);
+	// }
 
 	return (
 		<div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start">
@@ -59,7 +52,7 @@ function SignUpPage() {
 						</Link>
 					</div>
 
-					<Tabs
+					{/* <Tabs
 						value={_.findIndex(tabs, { id: selectedTabId })}
 						variant="fullWidth"
 						className="w-full mt-24 mb-32"
@@ -80,10 +73,11 @@ function SignUpPage() {
 								label={item.title}
 							/>
 						))}
-					</Tabs>
+					</Tabs> */}
 
-					{selectedTabId === 'jwt' && <JwtSignUpTab />}
-					{selectedTabId === 'firebase' && <FirebaseSignUpTab />}
+					{/* {selectedTabId === 'jwt' && <JwtSignUpTab />}
+					{selectedTabId === 'firebase' && <FirebaseSignUpTab />} */}
+					<JwtSignUpTab />
 				</div>
 			</Paper>
 
@@ -158,11 +152,11 @@ function SignUpPage() {
 						<div>Welcome to</div>
 						<div>our community</div>
 					</div>
-					<div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
+					{/* <div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
 						Fuse helps developers to build organized and well coded dashboards full of beautiful and rich
 						modules. Join us and start building your application today.
-					</div>
-					<div className="mt-32 flex items-center">
+					</div> */}
+					{/* <div className="mt-32 flex items-center">
 						<AvatarGroup
 							sx={{
 								'& .MuiAvatar-root': {
@@ -179,7 +173,7 @@ function SignUpPage() {
 						<div className="ml-16 font-medium tracking-tight text-gray-400">
 							More than 17k people joined us, it's your turn
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</Box>
 		</div>
