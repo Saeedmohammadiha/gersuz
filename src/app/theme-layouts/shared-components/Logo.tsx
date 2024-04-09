@@ -27,7 +27,7 @@ function Logo() {
 				alt="logo"
 			/>
 			<div className="flex space-x-8 items-center">
-				<div
+				{/* <div
 					className="badge flex items-center rounded px-8 py-4"
 					style={{ backgroundColor: '#121212', color: '#61DAFB' }}
 				>
@@ -38,13 +38,13 @@ function Logo() {
 						width="16"
 					/>
 					<span className="react-text mx-4 text-12">React</span>
-				</div>
-				<div
+				</div> */}
+				{/* <div
 					className="badge flex items-center rounded px-8 py-4"
 					style={{ backgroundColor: 'rgb(48,120,198)', color: '#ffffff' }}
 				>
 					<span className="react-text mx-4 text-12">TypeScript</span>
-				</div>
+				</div> */}
 			</div>
 		</Root>
 	);
