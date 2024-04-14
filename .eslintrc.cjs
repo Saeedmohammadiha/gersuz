@@ -35,22 +35,22 @@ module.exports = {
     ],
     "rules": {
         "prettier/prettier": [
-            "warn",
-            {
-                "endOfLine": "auto",
-                "arrowParens": "always",
-                "bracketSpacing": true,
-                "jsxBracketSameLine": false,
-                "printWidth": 120,
-                "proseWrap": "preserve",
-                "requirePragma": false,
-                "semi": true,
-                "singleQuote": true,
-                "tabWidth": 4,
-                "trailingComma": "none",
-                "useTabs": true,
-                "singleAttributePerLine": true
-            }
+            // "warn",
+            // {
+            //     "endOfLine": "auto",
+            //     "arrowParens": "always",
+            //     "bracketSpacing": true,
+            //     "jsxBracketSameLine": false,
+            //     "printWidth": 120,
+            //     "proseWrap": "preserve",
+            //     "requirePragma": false,
+            //     "semi": true,
+            //     "singleQuote": true,
+            //     "tabWidth": 4,
+            //     "trailingComma": "none",
+            //     "useTabs": true,
+            //     "singleAttributePerLine": true
+            // }
         ],
         "quotes": [
             1,
