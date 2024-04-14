@@ -7,21 +7,16 @@ import Typography from '@mui/material/Typography';
 import { motion } from 'framer-motion';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import _ from '@lodash';
 import { FormProvider, useForm } from 'react-hook-form';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import ProductsHeader from './ProductsHeader';
-import BasicInfoTab from './tabs/BasicInfoTab';
-import InventoryTab from './tabs/InventoryTab';
-import PricingTab from './tabs/PricingTab';
-import ProductImagesTab from './tabs/ProductImagesTab';
-import ShippingTab from './tabs/ShippingTab';
-import { useGetECommerceProductQuery } from './ECommerceApi';
-import ProductModel from './models/ProductModel';
+import InfoTab from './tabs/InfoTab';
+import ImagesTab from './tabs/ImagesTab';
 
+const isLoading = false;
+const isError = false;
 /**
  * Form Validation Schema
  */
@@ -39,13 +34,13 @@ function Product() {
 
 	const { productId } = routeParams;
 
-	const {
-		data: product,
-		isLoading,
-		isError
-	} = useGetECommerceProductQuery(productId, {
-		skip: !productId || productId === 'new'
-	});
+	// const {
+	// 	data: product,
+	// 	isLoading,
+	// 	isError
+	// } = useGetECommerceProductQuery(productId, {
+	// 	skip: !productId || productId === 'new'
+	// });
 
 	const [tabValue, setTabValue] = useState(0);
 
@@ -61,15 +56,15 @@ function Product() {
 
 	useEffect(() => {
 		if (productId === 'new') {
-			reset(ProductModel({}));
+			reset();
 		}
 	}, [productId, reset]);
 
-	useEffect(() => {
-		if (product) {
-			reset({ ...product });
-		}
-	}, [product, reset]);
+	// useEffect(() => {
+	// 	if (product) {
+	// 		reset({ ...product });
+	// 	}
+	// }, [product, reset]);
 
 	/**
 	 * Tab Change
@@ -130,40 +125,27 @@ function Product() {
 							indicatorColor="secondary"
 							textColor="secondary"
 							variant="scrollable"
-							scrollButtons="auto"
 							classes={{ root: 'w-full h-64 border-b-1' }}
 						>
 							<Tab
 								className="h-64"
-								label="Basic Info"
+								label="Info"
 							/>
 							<Tab
 								className="h-64"
-								label="Product Images"
-							/>
-							<Tab
-								className="h-64"
-								label="Pricing"
-							/>
-							<Tab
-								className="h-64"
-								label="Inventory"
-							/>
-							<Tab
-								className="h-64"
-								label="Shipping"
+								label="Images"
 							/>
 						</Tabs>
 						<div className="p-16 sm:p-24 max-w-3xl">
 							<div className={tabValue !== 0 ? 'hidden' : ''}>
-								<BasicInfoTab />
+								<InfoTab />
 							</div>
 
 							<div className={tabValue !== 1 ? 'hidden' : ''}>
-								<ProductImagesTab />
+								<ImagesTab />
 							</div>
 
-							<div className={tabValue !== 2 ? 'hidden' : ''}>
+							{/* <div className={tabValue !== 2 ? 'hidden' : ''}>
 								<PricingTab />
 							</div>
 
@@ -173,7 +155,7 @@ function Product() {
 
 							<div className={tabValue !== 4 ? 'hidden' : ''}>
 								<ShippingTab />
-							</div>
+							</div> */}
 						</div>
 					</>
 				}

@@ -5,7 +5,6 @@ import FuseUtils from '@fuse/utils';
 import { Controller, useFormContext } from 'react-hook-form';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import Box from '@mui/material/Box';
-import { EcommerceProduct } from './../ECommerceApi';
 
 const Root = styled('div')(({ theme }) => ({
 	'& .productImageFeaturedStar': {
@@ -44,6 +43,12 @@ const Root = styled('div')(({ theme }) => ({
 	}
 }));
 
+type ImageType = {
+	id: string;
+	url: string;
+	type: string;
+};
+
 /**
  * The product images tab.
  */
@@ -51,7 +56,7 @@ function ProductImagesTab() {
 	const methods = useFormContext();
 	const { control, watch } = methods;
 
-	const images = watch('images') as EcommerceProduct['images'];
+	const images = watch('images') as ImageType[];
 
 	return (
 		<Root>
@@ -101,7 +106,7 @@ function ProductImagesTab() {
 
 									const newImage = await readFileAsync();
 
-									onChange([newImage, ...(value as EcommerceProduct['images'])]);
+									onChange([newImage, ...(value as ImageType[])]);
 								}}
 							/>
 							<FuseSvgIcon
@@ -119,7 +124,7 @@ function ProductImagesTab() {
 					defaultValue=""
 					render={({ field: { onChange, value } }) => {
 						return (
-							<>
+							<div>
 								{images?.map((media) => (
 									<div
 										onClick={() => onChange(media.id)}
@@ -142,7 +147,7 @@ function ProductImagesTab() {
 										/>
 									</div>
 								))}
-							</>
+							</div>
 						);
 					}}
 				/>

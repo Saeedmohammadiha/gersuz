@@ -1,19 +1,16 @@
 {
-
-  "htmlWhitespaceSensitivity": "strict",
-  "tailwindFunctions": ["tw"],
-  "tslintintegration": true,
-  "endOfLine": "auto",
-  "arrowParens": "always",
-  "bracketSpacing": true,
-  "jsxBracketSameLine": false,
-  "printWidth": 120,
-  "proseWrap": "preserve",
-  "requirePragma": false,
-  "semi": true,
-  "singleQuote": true,
-  "tabWidth": 4,
-  "trailingComma": "none",
-  "useTabs": true,
-  "singleAttributePerLine": true
+	"tslintintegration": true,
+	"endOfLine": "auto",
+	"arrowParens": "always",
+	"bracketSpacing": true,
+	"jsxBracketSameLine": false,
+	"printWidth": 120,
+	"proseWrap": "preserve",
+	"requirePragma": false,
+	"semi": true,
+	"singleQuote": true,
+	"tabWidth": 4,
+	"trailingComma": "none",
+	"useTabs": true,
+	"singleAttributePerLine": true
 }
