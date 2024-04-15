@@ -9,10 +9,8 @@ import { lazy } from 'react';
 // i18next.addResourceBundle('ar', 'examplePage', ar);
 
 const Faqs = lazy(() => import('./Faqs'));
+const Faq = lazy(() => import('./Faq/Faq'));
 
-/**
- * The Example page config.
- */
 const FaqsConfig = {
 	settings: {
 		layout: {}
@@ -21,6 +19,10 @@ const FaqsConfig = {
 		{
 			path: '/Admin/Faqs',
 			element: <Faqs />
+		},
+		{
+			path: '/Admin/Faqs/:FaqId/*',
+			element: <Faq />
 		}
 	]
 };

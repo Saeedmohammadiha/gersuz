@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import TableHead from '@mui/material/TableHead';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { lighten } from '@mui/material/styles';
-import { useDeleteECommerceProductsMutation } from '../ECommerceApi';
+import { useDeleteAdminFaqMutation } from '../AdminApi';
 
 /**
  * The table head row type.
@@ -75,8 +75,8 @@ const rows: rowType[] = [
 	// }
 ];
 
-type ProductsTableHeadPropsType = {
-	selectedProductIds: string[];
+type FaqssTableHeadPropsType = {
+	selectedFaqIds: string[];
 	onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
 	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	tableOrder: {
@@ -88,14 +88,14 @@ type ProductsTableHeadPropsType = {
 };
 
 /**
- * The products table head component.
+ * The faqs table head component.
  */
-function ProductsTableHead(props: ProductsTableHeadPropsType) {
-	const { selectedProductIds, tableOrder, onSelectAllClick, onRequestSort, rowCount, onMenuItemClick } = props;
+function FaqsTableHead(props: FaqssTableHeadPropsType) {
+	const { selectedFaqIds, tableOrder, onSelectAllClick, onRequestSort, rowCount, onMenuItemClick } = props;
 
-	const [removeProducts] = useDeleteECommerceProductsMutation();
+	const [removeFaq] = useDeleteAdminFaqMutation();
 
-	const numSelected = selectedProductIds.length;
+	const numSelected = selectedFaqIds.length;
 
 	const [selectedProductsMenu, setSelectedProductsMenu] = useState<HTMLButtonElement | null>(null);
 
@@ -152,7 +152,7 @@ function ProductsTableHead(props: ProductsTableHeadPropsType) {
 								<MenuList>
 									<MenuItem
 										onClick={() => {
-											removeProducts(selectedProductIds);
+											removeFaq(selectedFaqIds);
 											onMenuItemClick();
 											closeSelectedProductsMenu();
 										}}
@@ -206,4 +206,4 @@ function ProductsTableHead(props: ProductsTableHeadPropsType) {
 	);
 }
 
-export default ProductsTableHead;
+export default FaqsTableHead;

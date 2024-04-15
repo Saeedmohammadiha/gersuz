@@ -17,23 +17,23 @@ import { Many } from 'lodash';
 import { WithRouterProps } from '@fuse/core/withRouter/withRouter';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import ProductsTableHead from './FaqsTableHead';
-import { EcommerceProduct, selectFilteredProducts, useGetECommerceProductsQuery } from '../ECommerceApi';
+import FaqsTableHead from './FaqsTableHead';
+import { Faq, selectFilteredFaqs, useGetAdminFaqsQuery } from '../AdminApi';
 
-type ProductsTableProps = WithRouterProps & {
+type FaqsTableProps = WithRouterProps & {
 	navigate: (path: string) => void;
 };
 
 /**
- * The products table.
+ * The faqs table.
  */
-function ProductsTable(props: ProductsTableProps) {
+function FaqsTable(props: FaqsTableProps) {
 	const { navigate } = props;
 
-	const { data, isLoading } = useGetECommerceProductsQuery();
-	const products = useSelector(selectFilteredProducts(data));
+	const { data, isLoading } = useGetAdminFaqsQuery();
+	const faqs = useSelector(selectFilteredFaqs(data));
 
-	const [selected, setSelected] = useState<EcommerceProduct['id'][]>([]);
+	const [selected, setSelected] = useState<Faq['Id'][]>([]);
 
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -60,7 +60,7 @@ function ProductsTable(props: ProductsTableProps) {
 
 	function handleSelectAllClick(event: ChangeEvent<HTMLInputElement>) {
 		if (event.target.checked) {
-			setSelected(products.map((n) => n.id));
+			setSelected(faqs.map((n) => n.Id));
 			return;
 		}
 
@@ -71,8 +71,9 @@ function ProductsTable(props: ProductsTableProps) {
 		setSelected([]);
 	}
 
-	function handleClick(item: EcommerceProduct) {
-		navigate(`/apps/e-commerce/products/${item.id}/${item.handle}`);
+	function handleClick(item: Faq) {
+		//TODO: chnge route
+		navigate(`/apps/e-commerce/products/${item.Id}`);
 	}
 
 	function handleCheck(event: ChangeEvent<HTMLInputElement>, id: string) {
@@ -108,7 +109,7 @@ function ProductsTable(props: ProductsTableProps) {
 		);
 	}
 
-	if (products?.length === 0) {
+	if (faqs?.length === 0) {
 		return (
 			<motion.div
 				initial={{ opacity: 0 }}
@@ -119,7 +120,7 @@ function ProductsTable(props: ProductsTableProps) {
 					color="text.secondary"
 					variant="h5"
 				>
-					There are no products!
+					There are no faqs!
 				</Typography>
 			</motion.div>
 		);
@@ -133,26 +134,26 @@ function ProductsTable(props: ProductsTableProps) {
 					className="min-w-xl"
 					aria-labelledby="tableTitle"
 				>
-					<ProductsTableHead
-						selectedProductIds={selected}
+					<FaqsTableHead
+						selectedFaqIds={selected}
 						tableOrder={tableOrder}
 						onSelectAllClick={handleSelectAllClick}
 						onRequestSort={handleRequestSort}
-						rowCount={products.length}
+						rowCount={faqs.length}
 						onMenuItemClick={handleDeselect}
 					/>
 
 					<TableBody>
 						{_.orderBy(
-							products,
+							faqs,
 							[
-								(o: EcommerceProduct) => {
-									switch (o.id) {
+								(o: Faq) => {
+									switch (o.Id) {
 										case 'categories': {
-											return o.categories[0];
+											return o.FAQCategoryTitle[0];
 										}
 										default: {
-											return o.id;
+											return o.Id;
 										}
 									}
 								}
@@ -160,8 +161,8 @@ function ProductsTable(props: ProductsTableProps) {
 							[tableOrder.direction] as Many<boolean | 'asc' | 'desc'>
 						)
 							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							.map((n: EcommerceProduct) => {
-								const isSelected = selected.indexOf(n.id) !== -1;
+							.map((n: Faq) => {
+								const isSelected = selected.indexOf(n.Id) !== -1;
 								return (
 									<TableRow
 										className="h-72 cursor-pointer"
@@ -169,7 +170,7 @@ function ProductsTable(props: ProductsTableProps) {
 										role="checkbox"
 										aria-checked={isSelected}
 										tabIndex={-1}
-										key={n.id}
+										key={n.Id}
 										selected={isSelected}
 										onClick={() => handleClick(n)}
 									>
@@ -180,11 +181,11 @@ function ProductsTable(props: ProductsTableProps) {
 											<Checkbox
 												checked={isSelected}
 												onClick={(event) => event.stopPropagation()}
-												onChange={(event) => handleCheck(event, n.id)}
+												onChange={(event) => handleCheck(event, n.Id)}
 											/>
 										</TableCell>
 
-										<TableCell
+										{/* <TableCell
 											className="w-52 px-4 md:px-0"
 											component="th"
 											scope="row"
@@ -203,22 +204,31 @@ function ProductsTable(props: ProductsTableProps) {
 													alt={n.name}
 												/>
 											)}
-										</TableCell>
+										</TableCell> */}
 
 										<TableCell
 											className="p-4 md:p-16"
 											component="th"
 											scope="row"
 										>
-											{n.name}
+											{n.FAQCategoryTitle}
 										</TableCell>
 
-										<TableCell
+										{/* <TableCell
 											className="p-4 md:p-16 truncate"
 											component="th"
 											scope="row"
 										>
 											{n.categories.join(', ')}
+										</TableCell> */}
+
+										<TableCell
+											className="p-4 md:p-16"
+											component="th"
+											scope="row"
+											align="right"
+										>
+											{n.DisplayPriority}
 										</TableCell>
 
 										<TableCell
@@ -227,28 +237,26 @@ function ProductsTable(props: ProductsTableProps) {
 											scope="row"
 											align="right"
 										>
-											<span>$</span>
-											{n.priceTaxIncl}
-										</TableCell>
-
-										<TableCell
-											className="p-4 md:p-16"
-											component="th"
-											scope="row"
-											align="right"
-										>
-											{n.quantity}
-											<i
+											{n.Question}
+											{/* <i
 												className={clsx(
 													'inline-block w-8 h-8 rounded mx-8',
 													n.quantity <= 5 && 'bg-red',
 													n.quantity > 5 && n.quantity <= 25 && 'bg-orange',
 													n.quantity > 25 && 'bg-green'
 												)}
-											/>
+											/> */}
+										</TableCell>
+										<TableCell
+											className="p-4 md:p-16"
+											component="th"
+											scope="row"
+											align="right"
+										>
+											{n.Response}
 										</TableCell>
 
-										<TableCell
+										{/* <TableCell
 											className="p-4 md:p-16"
 											component="th"
 											scope="row"
@@ -269,7 +277,7 @@ function ProductsTable(props: ProductsTableProps) {
 													heroicons-outline:minus-circle
 												</FuseSvgIcon>
 											)}
-										</TableCell>
+										</TableCell> */}
 									</TableRow>
 								);
 							})}
@@ -280,7 +288,7 @@ function ProductsTable(props: ProductsTableProps) {
 			<TablePagination
 				className="shrink-0 border-t-1"
 				component="div"
-				count={products.length}
+				count={faqs.length}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				backIconButtonProps={{
@@ -296,4 +304,4 @@ function ProductsTable(props: ProductsTableProps) {
 	);
 }
 
-export default withRouter(ProductsTable);
+export default withRouter(FaqsTable);

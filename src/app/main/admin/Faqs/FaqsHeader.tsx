@@ -63,7 +63,7 @@ function FaqsHeader() {
 						variant="contained"
 						color="secondary"
 						component={NavLinkAdapter}
-						to="/apps/e-commerce/products/new"
+						to="/Admin/Faqs/new/"
 					>
 						<FuseSvgIcon size={20}>heroicons-outline:plus</FuseSvgIcon>
 						<span className="hidden sm:flex mx-8">Add</span>
