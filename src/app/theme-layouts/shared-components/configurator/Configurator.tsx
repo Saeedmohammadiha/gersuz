@@ -14,7 +14,7 @@ import { useAuth } from '../../../auth/AuthRouteProvider';
 
 const Root = styled('div')(({ theme }) => ({
 	position: 'absolute',
-	height: 80,
+	height: 40,
 	right: 0,
 	top: 160,
 	display: 'flex',
@@ -90,7 +90,7 @@ function Configurator() {
 				id="fuse-settings-panel"
 				className="buttonWrapper"
 			>
-				<Button
+				{/* <Button
 					className="settingsButton m-0 h-40 w-40 min-w-40"
 					onClick={() => handleOpen('settings')}
 					variant="text"
@@ -100,7 +100,7 @@ function Configurator() {
 					<span>
 						<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>
 					</span>
-				</Button>
+				</Button> */}
 
 				<Button
 					className="m-0 h-40 w-40 min-w-40"

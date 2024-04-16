@@ -93,13 +93,13 @@ function ThemesPanel(props: ThemesPanelProps) {
 					Theme Color Options
 				</Typography>
 
-				<Typography
+				{/* <Typography
 					className="mb-24 text-justify text-12 italic"
 					color="text.secondary"
 				>
 					* Selected option will be applied to all layout elements (navbar, toolbar, etc.). You can also
 					create your own theme options and color schemes.
-				</Typography>
+				</Typography> */}
 
 				<FuseThemeSelector
 					options={themeOptions}
