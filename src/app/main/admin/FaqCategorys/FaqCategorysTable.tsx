@@ -150,6 +150,7 @@ function FaqCategorysTable(props: FaqCategorysTableProps) {
 							[
 								(o: FaqCategory) => {
 									switch (o.id) {
+										//TODO: need to customize
 										case 'categories': {
 											return o.title[0];
 										}

@@ -10,10 +10,9 @@ import { Link, useParams } from 'react-router-dom';
 import _ from '@lodash';
 import { FormProvider, useForm } from 'react-hook-form';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import FaqHeader from './FaqCategoryHeader';
+import FaqCategoryHeader from './FaqCategoryHeader';
 import InfoTab from './tabs/InfoTab';
 
 import { useGetFaqCategoryByIdQuery } from '../FaqCategorysApi';
@@ -22,25 +21,25 @@ import { useGetFaqCategoryByIdQuery } from '../FaqCategorysApi';
  * Form Validation Schema
  */
 const schema = z.object({
-	name: z.string().nonempty('You must enter a Faq name').min(5, 'The Faq name must be at least 5 characters')
+	name: z.string().nonempty('You must enter a FaqCategory name').min(5, 'The Faq name must be at least 5 characters')
 });
 
 /**
- * The Faq page.
+ * The FaqCategory page.
  */
-function Faq() {
+function FaqCategory() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 
 	const routeParams = useParams();
 
-	const { FaqId } = routeParams;
+	const { FaqCategoryId } = routeParams;
 
 	const {
-		data: Faq,
+		data: FaqCategory,
 		isLoading,
 		isError
-	} = useGetFaqCategoryByIdQuery(FaqId, {
-		skip: !FaqId || FaqId === 'new'
+	} = useGetFaqCategoryByIdQuery(FaqCategoryId, {
+		skip: !FaqCategoryId || FaqCategoryId === 'new'
 	});
 
 	const [tabValue, setTabValue] = useState(0);
@@ -56,16 +55,16 @@ function Faq() {
 	const form = watch();
 
 	useEffect(() => {
-		if (FaqId === 'new') {
+		if (FaqCategoryId === 'new') {
 			reset({});
 		}
-	}, [FaqId, reset]);
+	}, [FaqCategoryId, reset]);
 
 	useEffect(() => {
-		if (Faq) {
-			reset({ ...Faq });
+		if (FaqCategory) {
+			reset({ ...FaqCategory });
 		}
-	}, [Faq, reset]);
+	}, [FaqCategory, reset]);
 
 	/**
 	 * Tab Change
@@ -81,7 +80,7 @@ function Faq() {
 	/**
 	 * Show Message if the requested products is not exists
 	 */
-	if (isError && FaqId !== 'new') {
+	if (isError && FaqCategoryId !== 'new') {
 		return (
 			<motion.div
 				initial={{ opacity: 0 }}
@@ -118,7 +117,7 @@ function Faq() {
 	return (
 		<FormProvider {...methods}>
 			<FusePageCarded
-				header={<FaqHeader />}
+				header={<FaqCategoryHeader />}
 				content={
 					<>
 						<Tabs
@@ -148,4 +147,4 @@ function Faq() {
 	);
 }
 
-export default Faq;
+export default FaqCategory;

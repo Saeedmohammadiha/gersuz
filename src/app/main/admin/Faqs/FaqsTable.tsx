@@ -33,7 +33,7 @@ function FaqsTable(props: FaqsTableProps) {
 	const { data, isLoading } = useGetFaqsQuery();
 	const faqs = useSelector(selectFilteredFaqs(data));
 
-	const [selected, setSelected] = useState<Faq['Id'][]>([]);
+	const [selected, setSelected] = useState<Faq['id'][]>([]);
 
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -60,7 +60,7 @@ function FaqsTable(props: FaqsTableProps) {
 
 	function handleSelectAllClick(event: ChangeEvent<HTMLInputElement>) {
 		if (event.target.checked) {
-			setSelected(faqs.map((n) => n.Id));
+			setSelected(faqs.map((n) => n.id));
 			return;
 		}
 
@@ -73,7 +73,7 @@ function FaqsTable(props: FaqsTableProps) {
 
 	function handleClick(item: Faq) {
 		//TODO: chnge route
-		navigate(`/apps/e-commerce/products/${item.Id}`);
+		navigate(`/apps/e-commerce/products/${item.id}`);
 	}
 
 	function handleCheck(event: ChangeEvent<HTMLInputElement>, id: string) {
@@ -148,12 +148,12 @@ function FaqsTable(props: FaqsTableProps) {
 							faqs,
 							[
 								(o: Faq) => {
-									switch (o.Id) {
+									switch (o.id) {
 										case 'categories': {
-											return o.FAQCategoryTitle[0];
+											return o.faqCategoryTitle[0];
 										}
 										default: {
-											return o.Id;
+											return o.id;
 										}
 									}
 								}
@@ -162,7 +162,7 @@ function FaqsTable(props: FaqsTableProps) {
 						)
 							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 							.map((n: Faq) => {
-								const isSelected = selected.indexOf(n.Id) !== -1;
+								const isSelected = selected.indexOf(n.id) !== -1;
 								return (
 									<TableRow
 										className="h-72 cursor-pointer"
@@ -170,7 +170,7 @@ function FaqsTable(props: FaqsTableProps) {
 										role="checkbox"
 										aria-checked={isSelected}
 										tabIndex={-1}
-										key={n.Id}
+										key={n.id}
 										selected={isSelected}
 										onClick={() => handleClick(n)}
 									>
@@ -181,7 +181,7 @@ function FaqsTable(props: FaqsTableProps) {
 											<Checkbox
 												checked={isSelected}
 												onClick={(event) => event.stopPropagation()}
-												onChange={(event) => handleCheck(event, n.Id)}
+												onChange={(event) => handleCheck(event, n.id)}
 											/>
 										</TableCell>
 
@@ -191,10 +191,10 @@ function FaqsTable(props: FaqsTableProps) {
 											scope="row"
 											padding="none"
 										>
-											{n?.images?.length > 0 && n.featuredImageId ? (
+											{n?.images?.length > 0 && n.featuredImageid ? (
 												<img
 													className="w-full block rounded"
-													src={_.find(n.images, { id: n.featuredImageId })?.url}
+													src={_.find(n.images, { id: n.featuredImageid })?.url}
 													alt={n.name}
 												/>
 											) : (
@@ -211,7 +211,7 @@ function FaqsTable(props: FaqsTableProps) {
 											component="th"
 											scope="row"
 										>
-											{n.FAQCategoryTitle}
+											{n.faqCategoryTitle}
 										</TableCell>
 
 										{/* <TableCell
@@ -228,7 +228,7 @@ function FaqsTable(props: FaqsTableProps) {
 											scope="row"
 											align="right"
 										>
-											{n.DisplayPriority}
+											{n.displayPriority}
 										</TableCell>
 
 										<TableCell
@@ -237,7 +237,7 @@ function FaqsTable(props: FaqsTableProps) {
 											scope="row"
 											align="right"
 										>
-											{n.Question}
+											{n.question}
 											{/* <i
 												className={clsx(
 													'inline-block w-8 h-8 rounded mx-8',
@@ -253,7 +253,7 @@ function FaqsTable(props: FaqsTableProps) {
 											scope="row"
 											align="right"
 										>
-											{n.Response}
+											{n.response}
 										</TableCell>
 
 										{/* <TableCell

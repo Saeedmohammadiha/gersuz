@@ -29,10 +29,10 @@ function FaqHeader() {
 	const { formState, watch, getValues } = methods;
 	const { isValid, dirtyFields } = formState;
 
-	 const theme = useTheme();
+	const theme = useTheme();
 	const navigate = useNavigate();
 
-	const {FAQCategoryTitle, Question, Response, LangTitle } = watch() as Faq;
+	const { faqCategoryTitle, question, response, langTitle } = watch() as Faq;
 
 	// function handleSaveProduct() {
 	// 	saveProduct(getValues() as EcommerceProduct);
@@ -123,7 +123,7 @@ function FaqHeader() {
 							variant="contained"
 							color="secondary"
 							//onClick={handleRemoveProduct}
-							onClick={()=>{}}
+							onClick={() => {}}
 							startIcon={<FuseSvgIcon className="hidden sm:flex">heroicons-outline:trash</FuseSvgIcon>}
 						>
 							Remove
@@ -134,7 +134,7 @@ function FaqHeader() {
 							color="secondary"
 							disabled={_.isEmpty(dirtyFields) || !isValid}
 							//onClick={handleSaveProduct}
-							onClick={()=>{}}
+							onClick={() => {}}
 						>
 							Save
 						</Button>
@@ -146,7 +146,7 @@ function FaqHeader() {
 						color="secondary"
 						disabled={_.isEmpty(dirtyFields) || !isValid}
 						// onClick={handleCreateProduct}
-						onClick={()=>{}}
+						onClick={() => {}}
 					>
 						Add
 					</Button>

@@ -13,14 +13,14 @@ export const urls = {
 };
 
 export type Faq = {
-	Id: string;
-	FAQCategoryId: string;
-	FAQCategoryTitle: string;
-	LanguageId: number;
-	LangTitle: string;
-	Question: string;
-	Response: string;
-	DisplayPriority: number;
+	id: string;
+	faqCategoryId: string;
+	faqCategoryTitle: string;
+	languageId: number;
+	langTitle: string;
+	question: string;
+	response: string;
+	displayPriority: number;
 };
 
 const FaqApi = api
@@ -87,12 +87,12 @@ export type DeleteFaqApiArg = string[];
 export type GetFaqByIdApiArg = string;
 export type GetFaqByCategoryIdApiArg = string[];
 export type CreateOrEditFaqApiArg = {
-	Id?: string;
-	FAQCategoryId: string;
-	LanguageId: number;
-	Question: string;
-	Response: string;
-	DisplayPriority: number;
+	id?: string;
+	faqCategoryId: string;
+	languageId: number;
+	question: string;
+	response: string;
+	displayPriority: number;
 };
 
 /**
@@ -109,13 +109,3 @@ export const selectFilteredFaqs = (faqs: FaqApiResponse[]) =>
 		return FuseUtils.filterArrayByString<FaqApiResponse>(faqs, searchText);
 	});
 
-/**
- * Select filtered orders
- */
-// export const selectFilteredOrders = (orders: EcommerceOrder[]) =>
-// 	createSelector([selectSearchText], (searchText) => {
-// 		if (searchText.length === 0) {
-// 			return orders;
-// 		}
-// 		return FuseUtils.filterArrayByString<EcommerceOrder>(orders, searchText);
-// 	});
