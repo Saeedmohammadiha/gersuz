@@ -42,7 +42,7 @@ function FaqsHeader() {
 					<FuseSvgIcon color="disabled">heroicons-solid:search</FuseSvgIcon>
 
 					<Input
-						placeholder="Search products"
+						placeholder="Search faqcalc"
 						className="flex flex-1"
 						disableUnderline
 						fullWidth
