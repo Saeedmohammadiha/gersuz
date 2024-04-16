@@ -20,14 +20,14 @@ const navigationConfig: FuseNavItemType[] = [
 		icon: 'heroicons-outline:cube',
 		translate: 'ADMIN',
 		children: [
-			{
-				id: 'Admin.about',
-				title: 'about',
-				type: 'item',
-				icon: 'heroicons-outline:academic-cap',
-				url: '/Admin/about',
-				translate: 'ABOUT'
-			},
+			// {
+			// 	id: 'Admin.about',
+			// 	title: 'about',
+			// 	type: 'item',
+			// 	icon: 'heroicons-outline:academic-cap',
+			// 	url: '/Admin/about',
+			// 	translate: 'ABOUT'
+			// },
 			{
 				id: 'Admin.Faqs',
 				title: 'Faqs',
@@ -35,6 +35,14 @@ const navigationConfig: FuseNavItemType[] = [
 				icon: 'heroicons-outline:academic-cap',
 				url: '/Admin/Faqs',
 				translate: 'FAQS'
+			},
+			{
+				id: 'Admin.FaqCategories',
+				title: 'Faq Categories',
+				type: 'item',
+				icon: 'heroicons-outline:academic-cap',
+				url: '/Admin/FaqCategorys',
+				translate: ''
 			}
 			//   {
 			//     id: "Admin.calendar",

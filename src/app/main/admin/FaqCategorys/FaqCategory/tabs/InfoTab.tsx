@@ -11,7 +11,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 /**
  * The basic info tab.
  */
-function BasicInfoTab() {
+function InfoTab() {
 	const methods = useFormContext();
 	const { control, formState } = methods;
 	const { errors } = formState;
@@ -42,65 +42,23 @@ function BasicInfoTab() {
 					/>
 				)}
 			/>
+
 			<Controller
-				name="Faq Category"
+				name="title"
 				control={control}
-				render={({ field: { onChange, value } }) => (
-					<Autocomplete
+				render={({ field }) => (
+					<TextField
+						{...field}
 						className="mt-8 mb-16"
-						value={value as { label: string; value: number }}
-						options={[{ label: 'test', value: 12 }]}
-						onChange={(event, newValue) => {
-							onChange(newValue);
-						}}
-						renderInput={(params) => (
-							<TextField
-								{...params}
-								label="Faq Category"
-								variant="outlined"
-								InputLabelProps={{
-									shrink: true
-								}}
-							/>
-						)}
+						id="title"
+						label="title"
+						type="text"
+						variant="outlined"
+						fullWidth
 					/>
 				)}
 			/>
 
-			<Controller
-				name="question"
-				control={control}
-				render={({ field }) => (
-					<TextField
-						{...field}
-						className="mt-8 mb-16"
-						id="question"
-						label="question"
-						type="text"
-						multiline
-						rows={5}
-						variant="outlined"
-						fullWidth
-					/>
-				)}
-			/>
-			<Controller
-				name="answer"
-				control={control}
-				render={({ field }) => (
-					<TextField
-						{...field}
-						className="mt-8 mb-16"
-						id="answer"
-						label="answer"
-						type="text"
-						multiline
-						rows={5}
-						variant="outlined"
-						fullWidth
-					/>
-				)}
-			/>
 			<Controller
 				name="DisplayPriority"
 				control={control}
@@ -120,4 +78,4 @@ function BasicInfoTab() {
 	);
 }
 
-export default BasicInfoTab;
+export default InfoTab;

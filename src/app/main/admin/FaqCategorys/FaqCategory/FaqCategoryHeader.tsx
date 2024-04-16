@@ -6,32 +6,27 @@ import { useFormContext } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-// import {
-// 	EcommerceProduct,
-// 	useCreateECommerceProductMutation,
-// 	useDeleteECommerceProductMutation,
-// 	useUpdateECommerceProductMutation
-// } from '../ECommerceApi';
+import { FaqCategory } from '../FaqCategorysApi';
 
 /**
- * The product header.
+ * The FaqCategory header.
  */
-function ProductHeader() {
+function FaqCategoryHeader() {
 	const routeParams = useParams();
-	const { faqId } = routeParams;
+	const { FaqCategoryId } = routeParams;
 
 	// const [createProduct] = useCreateECommerceProductMutation();
 	// const [saveProduct] = useUpdateECommerceProductMutation();
 	// const [removeProduct] = useDeleteECommerceProductMutation();
 
-	// const methods = useFormContext();
-	// const { formState, watch, getValues } = methods;
-	// const { isValid, dirtyFields } = formState;
+	const methods = useFormContext();
+	const { formState, watch, getValues } = methods;
+	const { isValid, dirtyFields } = formState;
 
 	 const theme = useTheme();
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
-	// const { name, images, featuredImageId } = watch() as EcommerceProduct;
+	const {title, langTitle } = watch() as FaqCategory;
 
 	// function handleSaveProduct() {
 	// 	saveProduct(getValues() as EcommerceProduct);
@@ -69,7 +64,7 @@ function ProductHeader() {
 								? 'heroicons-outline:arrow-sm-left'
 								: 'heroicons-outline:arrow-sm-right'}
 						</FuseSvgIcon>
-						<span className="flex mx-4 font-medium">Products</span>
+						<span className="flex mx-4 font-medium">Faq Category</span>
 					</Typography>
 				</motion.div>
 
@@ -105,7 +100,7 @@ function ProductHeader() {
 							variant="caption"
 							className="font-medium"
 						>
-							Product Detail
+							Faq Category Detail
 						</Typography>
 					</motion.div>
 				</div>
@@ -115,13 +110,14 @@ function ProductHeader() {
 				initial={{ opacity: 0, x: 20 }}
 				animate={{ opacity: 1, x: 0, transition: { delay: 0.3 } }}
 			>
-				{/* {productId !== 'new' ? (
+				{FaqCategoryId !== 'new' ? (
 					<>
 						<Button
 							className="whitespace-nowrap mx-4"
 							variant="contained"
 							color="secondary"
-							onClick={handleRemoveProduct}
+							//onClick={handleRemoveProduct}
+							onClick={()=>{}}
 							startIcon={<FuseSvgIcon className="hidden sm:flex">heroicons-outline:trash</FuseSvgIcon>}
 						>
 							Remove
@@ -131,7 +127,8 @@ function ProductHeader() {
 							variant="contained"
 							color="secondary"
 							disabled={_.isEmpty(dirtyFields) || !isValid}
-							onClick={handleSaveProduct}
+							//onClick={handleSaveProduct}
+							onClick={()=>{}}
 						>
 							Save
 						</Button>
@@ -142,14 +139,15 @@ function ProductHeader() {
 						variant="contained"
 						color="secondary"
 						disabled={_.isEmpty(dirtyFields) || !isValid}
-						onClick={handleCreateProduct}
+						// onClick={handleCreateProduct}
+						onClick={()=>{}}
 					>
 						Add
 					</Button>
-				)} */}
+				)}
 			</motion.div>
 		</div>
 	);
 }
 
-export default ProductHeader;
+export default FaqCategoryHeader;

@@ -13,10 +13,10 @@ import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import FaqHeader from './FaqHeader';
-import BasicInfoTab from './tabs/BasicInfoTab';
+import FaqHeader from './FaqCategoryHeader';
+import InfoTab from './tabs/InfoTab';
 
-import { useGetFaqByIdQuery } from '../FaqApi';
+import { useGetFaqCategoryByIdQuery } from '../FaqCategorysApi';
 
 /**
  * Form Validation Schema
@@ -34,13 +34,12 @@ function Faq() {
 	const routeParams = useParams();
 
 	const { FaqId } = routeParams;
-	
 
 	const {
 		data: Faq,
 		isLoading,
 		isError
-	} = useGetFaqByIdQuery(FaqId, {
+	} = useGetFaqCategoryByIdQuery(FaqId, {
 		skip: !FaqId || FaqId === 'new'
 	});
 
@@ -93,16 +92,17 @@ function Faq() {
 					color="text.secondary"
 					variant="h5"
 				>
-					There is no such product!
+					There is no such Faq Category!
 				</Typography>
 				<Button
 					className="mt-24"
 					component={Link}
 					variant="outlined"
+					//TODO: change rout
 					to="/apps/e-commerce/products"
 					color="inherit"
 				>
-					Go to Products Page
+					Go to Faq Category Page
 				</Button>
 			</motion.div>
 		);
@@ -132,45 +132,13 @@ function Faq() {
 						>
 							<Tab
 								className="h-64"
-								label="Basic Info"
+								label="Info"
 							/>
-							{/* <Tab
-								className="h-64"
-								label="Product Images"
-							/>
-							<Tab
-								className="h-64"
-								label="Pricing"
-							/>
-							<Tab
-								className="h-64"
-								label="Inventory"
-							/>
-							<Tab
-								className="h-64"
-								label="Shipping"
-							/> */}
 						</Tabs>
 						<div className="p-16 sm:p-24 max-w-3xl">
 							<div className={tabValue !== 0 ? 'hidden' : ''}>
-								<BasicInfoTab />
+								<InfoTab />
 							</div>
-
-							{/* <div className={tabValue !== 1 ? 'hidden' : ''}>
-								<ProductImagesTab />
-							</div>
-
-							<div className={tabValue !== 2 ? 'hidden' : ''}>
-								<PricingTab />
-							</div>
-
-							<div className={tabValue !== 3 ? 'hidden' : ''}>
-								<InventoryTab />
-							</div>
-
-							<div className={tabValue !== 4 ? 'hidden' : ''}>
-								<ShippingTab />
-							</div> */}
 						</div>
 					</>
 				}

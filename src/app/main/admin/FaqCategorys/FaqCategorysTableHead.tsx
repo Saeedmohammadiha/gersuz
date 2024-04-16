@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import TableHead from '@mui/material/TableHead';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { lighten } from '@mui/material/styles';
-import { useDeleteFaqMutation } from './FaqApi';
+import { useDeleteFaqCategoryMutation } from './FaqCategorysApi';
 
 /**
  * The table head row type.
@@ -31,52 +31,31 @@ type rowType = {
  * The table head rows data.
  */
 const rows: rowType[] = [
-	// {
-	// 	id: 'image',
-	// 	align: 'left',
-	// 	disablePadding: true,
-	// 	label: '',
-	// 	sort: false
-	// },
 	{
-		id: 'name',
+		id: 'title',
 		align: 'left',
 		disablePadding: false,
-		label: 'Name',
+		label: 'Title',
 		sort: true
 	},
 	{
-		id: 'categories',
+		id: 'language',
 		align: 'left',
 		disablePadding: false,
-		label: 'Category',
+		label: 'Language',
 		sort: true
 	},
 	{
-		id: 'question',
+		id: 'displayPriority',
 		align: 'right',
 		disablePadding: false,
-		label: 'Question',
+		label: 'Display Priority',
 		sort: true
-	},
-	{
-		id: 'answer',
-		align: 'right',
-		disablePadding: false,
-		label: 'Answer',
-		sort: true
-	},
-	// {
-	// 	id: 'active',
-	// 	align: 'right',
-	// 	disablePadding: false,
-	// 	label: 'Active',
-	// 	sort: true
-	// }
+	}
 ];
 
-type FaqsTableHeadPropsType = {
-	selectedFaqIds: string[];
+type FaqCategorysTableHeadPropsType = {
+	selectedFaqCategoryIds: string[];
 	onRequestSort: (event: MouseEvent<HTMLSpanElement>, property: string) => void;
 	onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	tableOrder: {
@@ -90,12 +69,12 @@ type FaqsTableHeadPropsType = {
 /**
  * The faqs table head component.
  */
-function FaqsTableHead(props: FaqsTableHeadPropsType) {
-	const { selectedFaqIds, tableOrder, onSelectAllClick, onRequestSort, rowCount, onMenuItemClick } = props;
+function FaqCategorysTableHead(props: FaqCategorysTableHeadPropsType) {
+	const { selectedFaqCategoryIds, tableOrder, onSelectAllClick, onRequestSort, rowCount, onMenuItemClick } = props;
 
-	const [removeFaq] = useDeleteFaqMutation();
+	const [removeFaq] = useDeleteFaqCategoryMutation();
 
-	const numSelected = selectedFaqIds.length;
+	const numSelected = selectedFaqCategoryIds.length;
 
 	const [selectedProductsMenu, setSelectedProductsMenu] = useState<HTMLButtonElement | null>(null);
 
@@ -152,7 +131,7 @@ function FaqsTableHead(props: FaqsTableHeadPropsType) {
 								<MenuList>
 									<MenuItem
 										onClick={() => {
-											removeFaq(selectedFaqIds);
+											removeFaq(selectedFaqCategoryIds);
 											onMenuItemClick();
 											closeSelectedProductsMenu();
 										}}
@@ -206,4 +185,4 @@ function FaqsTableHead(props: FaqsTableHeadPropsType) {
 	);
 }
 
-export default FaqsTableHead;
+export default FaqCategorysTableHead;
