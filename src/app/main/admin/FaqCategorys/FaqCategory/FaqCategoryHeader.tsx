@@ -6,7 +6,8 @@ import { useFormContext } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { FaqCategory } from '../FaqCategorysApi';
+import { FaqCategory, useCreateOrEditFaqCategoryMutation } from '../FaqCategorysApi';
+import { error } from 'console';
 
 /**
  * The FaqCategory header.
@@ -14,31 +15,52 @@ import { FaqCategory } from '../FaqCategorysApi';
 function FaqCategoryHeader() {
 	const routeParams = useParams();
 	const { FaqCategoryId } = routeParams;
+	const [createFaqCategory] = useCreateOrEditFaqCategoryMutation();
 
 	// const [createProduct] = useCreateECommerceProductMutation();
 	// const [saveProduct] = useUpdateECommerceProductMutation();
 	// const [removeProduct] = useDeleteECommerceProductMutation();
 
 	const methods = useFormContext();
-	const { formState, watch, getValues } = methods;
+	const { formState, watch, getValues, handleSubmit } = methods;
 	const { isValid, dirtyFields } = formState;
+	console.log({ isValid });
 
-	 const theme = useTheme();
+	const theme = useTheme();
 	const navigate = useNavigate();
 
-	const {title, langTitle } = watch() as FaqCategory;
+	//const {title, langTitle } = watch() as FaqCategory;
 
-	// function handleSaveProduct() {
-	// 	saveProduct(getValues() as EcommerceProduct);
-	// }
+	function handleSaveProduct() {
+		console.log(getValues());
 
-	// function handleCreateProduct() {
-	// 	createProduct(getValues() as EcommerceProduct)
-	// 		.unwrap()
-	// 		.then((data) => {
-	// 			navigate(`/apps/e-commerce/products/${data.id}`);
-	// 		});
-	// }
+		//saveProduct(getValues() as EcommerceProduct);
+	}
+
+	function handleCreateFaqCategory(data) {
+		console.log(getValues());
+		console.log({data});
+		
+		
+		createFaqCategory({
+			//id: '1',
+			languageId: getValues().language.value as number,
+			title: getValues().title,
+			displayPriority: getValues().displayPriority
+		})
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+
+		// createProduct(getValues() as EcommerceProduct)
+		// 	.unwrap()
+		// 	.then((data) => {
+		// 		navigate(`/apps/e-commerce/products/${data.id}`);
+		// 	});
+	}
 
 	// function handleRemoveProduct() {
 	// 	removeProduct(productId);
@@ -117,7 +139,7 @@ function FaqCategoryHeader() {
 							variant="contained"
 							color="secondary"
 							//onClick={handleRemoveProduct}
-							onClick={()=>{}}
+							onClick={() => {}}
 							startIcon={<FuseSvgIcon className="hidden sm:flex">heroicons-outline:trash</FuseSvgIcon>}
 						>
 							Remove
@@ -126,9 +148,8 @@ function FaqCategoryHeader() {
 							className="whitespace-nowrap mx-4"
 							variant="contained"
 							color="secondary"
-							disabled={_.isEmpty(dirtyFields) || !isValid}
-							//onClick={handleSaveProduct}
-							onClick={()=>{}}
+							//disabled={_.isEmpty(dirtyFields) || !isValid}
+							onClick={handleSaveProduct}
 						>
 							Save
 						</Button>
@@ -138,9 +159,8 @@ function FaqCategoryHeader() {
 						className="whitespace-nowrap mx-4"
 						variant="contained"
 						color="secondary"
-						disabled={_.isEmpty(dirtyFields) || !isValid}
-						// onClick={handleCreateProduct}
-						onClick={()=>{}}
+						//disabled={_.isEmpty(dirtyFields) || !isValid}
+						onClick={handleSubmit(handleCreateFaqCategory)}
 					>
 						Add
 					</Button>

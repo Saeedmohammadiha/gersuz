@@ -1,6 +1,9 @@
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useGetAllLanguageQuery } from '../../../languagesApi';
+import { languages } from 'prismjs';
+import FuseLoading from '@fuse/core/FuseLoading';
 
 //TODO: get languages
 //TODO: set the languages in the select
@@ -13,20 +16,32 @@ import { Controller, useFormContext } from 'react-hook-form';
  */
 function InfoTab() {
 	const methods = useFormContext();
+	const { data: languages, isLoading } = useGetAllLanguageQuery();
+
+	const list = languages?.map((l) => {
+		return { label: l.languageTitle, value: l.id };
+	});
+
 	const { control, formState } = methods;
 	const { errors } = formState;
+console.log({errors});
+
+	if (isLoading) return <FuseLoading />;
 
 	return (
 		<div>
 			<Controller
-				name="Language"
+				name="language"
 				control={control}
 				render={({ field: { onChange, value } }) => (
 					<Autocomplete
 						className="mt-8 mb-16"
-						value={value as { label: string; value: number }}
-						options={[{ label: 'test', value: 12 }]}
+						value={value as { label: string; value: string }}
+						options={list}
+						defaultValue={{ label: 'en-US', value: '1' }}
 						onChange={(event, newValue) => {
+							console.log(value);
+							
 							onChange(newValue);
 						}}
 						renderInput={(params) => (

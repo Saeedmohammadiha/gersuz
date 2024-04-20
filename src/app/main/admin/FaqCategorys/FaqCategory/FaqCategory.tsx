@@ -21,7 +21,12 @@ import { useGetFaqCategoryByIdQuery } from '../FaqCategorysApi';
  * Form Validation Schema
  */
 const schema = z.object({
-	name: z.string().nonempty('You must enter a FaqCategory name').min(5, 'The Faq name must be at least 5 characters')
+	//language: z.object({label: z.string(), value: z.string()}).required(),
+	title: z.string().max(80, {message: 'title is too long'}),
+	DisplayPriority: z.string({
+		required_error: "Display Priority is required",
+		invalid_type_error: "Display Priority must be a number",
+	  })
 });
 
 /**
@@ -29,7 +34,6 @@ const schema = z.object({
  */
 function FaqCategory() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
-
 	const routeParams = useParams();
 
 	const { FaqCategoryId } = routeParams;
@@ -46,7 +50,7 @@ function FaqCategory() {
 
 	const methods = useForm({
 		mode: 'onChange',
-		defaultValues: {},
+	//	defaultValues: { language: { label: 'en-US', value: '1' }, title: '', DisplayPriority: null  },
 		resolver: zodResolver(schema)
 	});
 
@@ -62,7 +66,12 @@ function FaqCategory() {
 
 	useEffect(() => {
 		if (FaqCategory) {
-			reset({ ...FaqCategory });
+			//reset({ ...FaqCategory });
+			reset({
+				language: { label: FaqCategory.langTitle, value: FaqCategory.languageId.toString() },
+				title: FaqCategory.title,
+				DisplayPriority: FaqCategory.displayPriority
+			});
 		}
 	}, [FaqCategory, reset]);
 

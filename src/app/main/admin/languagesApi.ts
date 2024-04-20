@@ -2,8 +2,8 @@ import { apiService as api } from 'app/store/apiService';
 
 export const addTagTypes = ['languages', 'change'] as const;
 export const urls = {
-	GetAllLanguage: 'api/Language/GetAllLanguage/',
-	ChangeLanguage: 'api/Language/ChangeLanguage/'
+	GetAllLanguage: '/Language/GetAllLanguage/',
+	ChangeLanguage: '/Language/ChangeLanguage/'
 };
 
 export type Language = {
@@ -40,7 +40,7 @@ export type ApiType = {
 	[LanguageApi.reducerPath]: ReturnType<typeof LanguageApi.reducer>;
 };
 
-export type LanguageApiResponse = Language;
+export type LanguageApiResponse = Language[];
 
 export type GetLanguagesApiArg = void;
 export type ChangeLanguagesApiArg = Omit<Language, 'languageTitle'>;

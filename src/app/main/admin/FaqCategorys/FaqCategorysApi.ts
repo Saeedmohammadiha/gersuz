@@ -5,10 +5,10 @@ import { selectSearchText } from '../store/searchTextSlice';
 
 export const addTagTypes = ['FaqCategorys', 'FaqCategory'] as const;
 export const urls = {
-	GetAllFAQCategory: 'api/FAQCategory/GetAllFAQCategory/',
-	GetFAQCategoryById: '/api/FAQCategory/GetFAQCategoryById/',
-	AddEditFAQCategory: '/api/FAQCategory/AddEditFAQCategory/',
-	DeleteFAQCategory: '/api/FAQCategory/DeleteFAQCategory/'
+	GetAllFAQCategory: '/FAQCategory/GetAllFAQCategory/',
+	GetFAQCategoryById: '/FAQCategory/GetFAQCategoryById/',
+	AddEditFAQCategory: '/FAQCategory/AddEditFAQCategory/',
+	DeleteFAQCategory: '/FAQCategory/DeleteFAQCategory/'
 };
 
 export type FaqCategory = {

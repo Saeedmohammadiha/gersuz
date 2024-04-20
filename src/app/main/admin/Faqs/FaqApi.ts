@@ -5,11 +5,11 @@ import { selectSearchText } from '../store/searchTextSlice';
 
 export const addTagTypes = ['faqs', 'faq'] as const;
 export const urls = {
-	GetAllFAQs: '/api/FAQ/GetAllFAQs/',
-	GetFAQsByCategoryId: '/api/FAQ/GetFAQsByCategoryId/',
-	GetFAQById: '/api/FAQ/GetFAQById/',
-	AddEditFAQ: '/api/FAQ/AddEditFAQ/',
-	DeleteFAQ: '/api/FAQ/DeleteFAQ/'
+	GetAllFAQs: '/FAQ/GetAllFAQs/',
+	GetFAQsByCategoryId: '/FAQ/GetFAQsByCategoryId/',
+	GetFAQById: '/FAQ/GetFAQById/',
+	AddEditFAQ: '/FAQ/AddEditFAQ/',
+	DeleteFAQ: '/FAQ/DeleteFAQ/'
 };
 
 export type Faq = {
@@ -35,14 +35,14 @@ const FaqApi = api
 			}),
 			deleteFaq: build.mutation<FaqApiResponse, DeleteFaqApiArg>({
 				query: (faqId) => ({
-					url: `/api/FAQ/DeleteFAQ/${faqId}`,
+					url: `/FAQ/DeleteFAQ/${faqId}`,
 					method: 'DELETE'
 				}),
 				invalidatesTags: ['faq']
 			}),
 			getFaqById: build.query<FaqApiResponse, GetFaqByIdApiArg>({
 				query: (faqIds) => ({
-					url: `/api/FAQ/GetFAQById`,
+					url: `/FAQ/GetFAQById`,
 					data: faqIds
 				}),
 				providesTags: ['faq']
@@ -56,7 +56,7 @@ const FaqApi = api
 			}),
 			createOrEditFaq: build.mutation<FaqApiResponse, CreateOrEditFaqApiArg>({
 				query: (newFaq) => ({
-					url: `/api/FAQ/AddEditFAQ`,
+					url: `/FAQ/AddEditFAQ`,
 					method: 'POST',
 					data: newFaq
 				}),
