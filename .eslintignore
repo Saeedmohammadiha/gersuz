@@ -5,6 +5,7 @@ node_modules/
 # production
 build/
 public/
+dist/
 
 # ide
 .vscode/
