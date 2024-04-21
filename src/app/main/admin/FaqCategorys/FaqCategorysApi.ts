@@ -25,23 +25,22 @@ const FaqCategoryApi = api
 	})
 	.injectEndpoints({
 		endpoints: (build) => ({
-			getFaqCategorys: build.query<FaqCategoryApiResponse[], GetFaqCategorysApiArg>({
+			getFaqCategorys: build.query<GetAllFaqCategoryApiResponse, GetFaqCategorysApiArg>({
 				query: () => ({ url: urls.GetAllFAQCategory }),
 				providesTags: ['FaqCategorys']
 			}),
 
-			deleteFaqCategory: build.mutation<FaqCategoryApiResponse, DeleteFaqCategoryApiArg>({
+			deleteFaqCategory: build.mutation<DeleteFaqCategoryApiResponse, DeleteFaqCategoryApiArg>({
 				query: (FaqCategoryId) => ({
 					url: `${urls.DeleteFAQCategory}${FaqCategoryId}`,
 					method: 'DELETE'
 				}),
-				invalidatesTags: ['FaqCategory']
+				invalidatesTags: ['FaqCategory','FaqCategorys']
 			}),
 
-			getFaqCategoryById: build.query<FaqCategoryApiResponse, GetFaqCategoryByIdApiArg>({
+			getFaqCategoryById: build.query<GetFaqCategoryByIdApiResponse, GetFaqCategoryByIdApiArg>({
 				query: (FaqCategoryIds) => ({
-					url: urls.GetFAQCategoryById,
-					data: FaqCategoryIds
+					url: `${urls.GetFAQCategoryById}${FaqCategoryIds}`
 				}),
 				providesTags: ['FaqCategory']
 			}),
@@ -67,14 +66,28 @@ export const {
 	useCreateOrEditFaqCategoryMutation
 } = FaqCategoryApi;
 
-export type ApiType = {
+export type FaqCategoryApiType = {
 	[FaqCategoryApi.reducerPath]: ReturnType<typeof FaqCategoryApi.reducer>;
 };
 
-export type FaqCategoryApiResponse = FaqCategory;
+export type FaqCategoryApiResponse = {
+	code: string;
+	message: string;
+	status: string;
+	body: FaqCategory;
+};
+export type GetAllFaqCategoryApiResponse = FaqCategory[];
+export type GetFaqCategoryByIdApiResponse = FaqCategory;
+export type DeleteFaqCategoryApiResponse = {
+	code: string;
+	message: string;
+	status: string;
+	body: null;
+};
 
 export type GetFaqCategorysApiArg = void;
-export type DeleteFaqCategoryApiArg = string[];
+//TODO: group deleting 
+export type DeleteFaqCategoryApiArg = string[] | string;
 export type GetFaqCategoryByIdApiArg = string;
 export type CreateOrEditFaqCategoryApiArg = {
 	id?: string;
@@ -84,26 +97,16 @@ export type CreateOrEditFaqCategoryApiArg = {
 };
 
 /**
- * Select FaqCategorys
- */
-/**
  * Select filtered FaqCategorys
  */
-export const selectFilteredFaqCategorys = (FaqCategorys: FaqCategoryApiResponse[]) =>
-	createSelector([selectSearchText], (searchText) => {
+export const selectFilteredFaqCategorys = (FaqCategorys: FaqCategory[]) => {
+	console.log(FaqCategorys);
+	return createSelector([selectSearchText], (searchText) => {
 		if (searchText?.length === 0) {
 			return FaqCategorys;
 		}
-		return FuseUtils.filterArrayByString<FaqCategoryApiResponse>(FaqCategorys, searchText);
-	});
+		console.log({ searchText });
 
-/**
- * Select filtered orders
- */
-// export const selectFilteredOrders = (orders: EcommerceOrder[]) =>
-// 	createSelector([selectSearchText], (searchText) => {
-// 		if (searchText.length === 0) {
-// 			return orders;
-// 		}
-// 		return FuseUtils.filterArrayByString<EcommerceOrder>(orders, searchText);
-// 	});
+		return FuseUtils.filterArrayByString<FaqCategory>(FaqCategorys, searchText);
+	});
+};

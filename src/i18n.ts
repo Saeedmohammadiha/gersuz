@@ -1,14 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import en_translation from "src/app/locals/en/translation.json"
+import tr_translation from "src/app/locals/tr/translation.json"
 
 /**
  * resources is an object that contains all the translations for the different languages.
  */
 const resources = {
-	en: {
-		translation: {
-			'Welcome to React': 'Welcome to React and react-i18next'
-		}
+	'en-US': {
+		translation: en_translation
+	},
+	'tr-TU': {
+		translation: tr_translation
 	}
 };
 
@@ -20,7 +23,7 @@ const resources = {
 i18n.use(initReactI18next) // passes i18n down to react-i18next
 	.init({
 		resources,
-		lng: 'en',
+		lng: 'en-US',
 
 		keySeparator: false, // we do not use keys in form messages.welcome
 

@@ -5,10 +5,10 @@ import { AppRootStateType } from '.';
 const initialState = '';
 
 /**
- * The ECommerce App SearchText.
+ * The admin App SearchText.
  */
 export const searchTextSlice = createSlice({
-	name: 'eCommerceApp/searchText',
+	name: 'admin/searchText',
 	initialState,
 	reducers: {
 		resetSearchText: () => initialState,
@@ -27,7 +27,7 @@ export const { setSearchText, resetSearchText } = searchTextSlice.actions;
 
 export type searchTextSliceType = typeof searchTextSlice;
 
-export const selectSearchText = appSelector((state: AppRootStateType) => state.eCommerceApp?.searchText);
+export const selectSearchText = appSelector((state: AppRootStateType) => state.admin?.searchText);
 
 const searchTextReducer = searchTextSlice.reducer;
 

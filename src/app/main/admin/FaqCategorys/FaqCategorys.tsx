@@ -2,6 +2,8 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import FaqCategorysHeader from './FaqCategorysHeader';
 import FaqCategorysTable from './FaqCategorysTable';
+import reducer from '../store';
+import withReducer from 'app/store/withReducer';
 
 /**
  * The FaqCategorys page.
@@ -18,4 +20,4 @@ function FaqCategorys() {
 	);
 }
 
-export default FaqCategorys;
+export default withReducer('admin', reducer)(FaqCategorys);

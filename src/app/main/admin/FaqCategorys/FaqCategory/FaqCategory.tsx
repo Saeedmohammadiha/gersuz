@@ -22,11 +22,15 @@ import { useGetFaqCategoryByIdQuery } from '../FaqCategorysApi';
  */
 const schema = z.object({
 	//language: z.object({label: z.string(), value: z.string()}).required(),
-	title: z.string().max(80, {message: 'title is too long'}),
-	DisplayPriority: z.string({
-		required_error: "Display Priority is required",
-		invalid_type_error: "Display Priority must be a number",
-	  })
+	title: z
+		.string({
+			required_error: 'Title is required'
+		})
+		.max(80, { message: 'title is too long' }),
+	displayPriority: z.string({
+		required_error: 'Display Priority is required',
+		invalid_type_error: 'Display Priority must be a number'
+	})
 });
 
 /**
@@ -34,9 +38,8 @@ const schema = z.object({
  */
 function FaqCategory() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
-	const routeParams = useParams();
-
-	const { FaqCategoryId } = routeParams;
+	const { FaqCategoryId } = useParams();
+	const [tabValue, setTabValue] = useState(0);
 
 	const {
 		data: FaqCategory,
@@ -46,18 +49,14 @@ function FaqCategory() {
 		skip: !FaqCategoryId || FaqCategoryId === 'new'
 	});
 
-	const [tabValue, setTabValue] = useState(0);
-
 	const methods = useForm({
 		mode: 'onChange',
-	//	defaultValues: { language: { label: 'en-US', value: '1' }, title: '', DisplayPriority: null  },
+		defaultValues: { language: { label: 'en-US', value: '1' }, ...FaqCategory },
 		resolver: zodResolver(schema)
 	});
 
 	const { reset, watch } = methods;
-
 	const form = watch();
-
 	useEffect(() => {
 		if (FaqCategoryId === 'new') {
 			reset({});
@@ -66,25 +65,18 @@ function FaqCategory() {
 
 	useEffect(() => {
 		if (FaqCategory) {
-			//reset({ ...FaqCategory });
 			reset({
-				language: { label: FaqCategory.langTitle, value: FaqCategory.languageId.toString() },
+				language: {
+					label: FaqCategory?.langTitle,
+					value: FaqCategory?.languageId.toString()
+				},
 				title: FaqCategory.title,
-				DisplayPriority: FaqCategory.displayPriority
+				displayPriority: FaqCategory.displayPriority
 			});
 		}
 	}, [FaqCategory, reset]);
 
-	/**
-	 * Tab Change
-	 */
-	function handleTabChange(event: SyntheticEvent, value: number) {
-		setTabValue(value);
-	}
-
-	if (isLoading) {
-		return <FuseLoading />;
-	}
+	if (isLoading) return <FuseLoading />;
 
 	/**
 	 * Show Message if the requested products is not exists
@@ -107,7 +99,7 @@ function FaqCategory() {
 					component={Link}
 					variant="outlined"
 					//TODO: change rout
-					to="/apps/e-commerce/products"
+					to="/Admin/FaqCategorys"
 					color="inherit"
 				>
 					Go to Faq Category Page
@@ -115,13 +107,6 @@ function FaqCategory() {
 			</motion.div>
 		);
 	}
-
-	/**
-	 * Wait while product data is loading and form is setted
-	 */
-	// if (_.isEmpty(form) || (FaqId && routeParams.productId !== Faq.Id && routeParams.FaqId !== 'new')) {
-	// 	return <FuseLoading />;
-	// }
 
 	return (
 		<FormProvider {...methods}>
@@ -131,7 +116,7 @@ function FaqCategory() {
 					<>
 						<Tabs
 							value={tabValue}
-							onChange={handleTabChange}
+							onChange={(e: SyntheticEvent, value: number) => setTabValue(value)}
 							indicatorColor="secondary"
 							textColor="secondary"
 							variant="scrollable"

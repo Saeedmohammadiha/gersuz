@@ -1,16 +1,16 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { RootStateType } from 'app/store/types';
 import searchText, { searchTextSliceType } from './searchTextSlice';
-import { ECommerceApiType } from '../Faqs/FaqApi';
+import { FaqCategoryApiType } from '../FaqCategorys/FaqCategorysApi';
 
 /**
- * The E-Commerce store reducer.
+ * The store reducer.
  */
 
 const reducer = combineReducers({
 	searchText
 });
 
-export type AppRootStateType = RootStateType<[searchTextSliceType]> & ECommerceApiType;
+export type AppRootStateType = RootStateType<[searchTextSliceType]> & FaqCategoryApiType;
 
 export default reducer;

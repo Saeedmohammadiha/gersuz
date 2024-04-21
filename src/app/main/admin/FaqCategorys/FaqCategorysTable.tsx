@@ -30,8 +30,7 @@ type FaqCategorysTableProps = WithRouterProps & {
 function FaqCategorysTable(props: FaqCategorysTableProps) {
 	const { navigate } = props;
 
-	const { data, isLoading } = useGetFaqCategorysQuery();
-	//TODO: search functionality
+	const { data, isLoading } = useGetFaqCategorysQuery();	
 	const FaqCategorys = useSelector(selectFilteredFaqCategorys(data));
 
 	const [selected, setSelected] = useState<FaqCategory['id'][]>([]);
@@ -74,7 +73,7 @@ function FaqCategorysTable(props: FaqCategorysTableProps) {
 
 	function handleClick(item: FaqCategory) {
 		//TODO: chnge route
-		navigate(`/apps/e-commerce/products/${item.id}`);
+		navigate(`/admin/FaqCategorys/${item.id}`);
 	}
 
 	function handleCheck(event: ChangeEvent<HTMLInputElement>, id: string) {
@@ -142,6 +141,7 @@ function FaqCategorysTable(props: FaqCategorysTableProps) {
 						onRequestSort={handleRequestSort}
 						rowCount={FaqCategorys.length}
 						onMenuItemClick={handleDeselect}
+						setSelected={setSelected}
 					/>
 
 					<TableBody>
@@ -206,7 +206,7 @@ function FaqCategorysTable(props: FaqCategorysTableProps) {
 											className="p-4 md:p-16"
 											component="th"
 											scope="row"
-											align="right"
+										
 										>
 											{n.displayPriority}
 										</TableCell>

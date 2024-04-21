@@ -50,7 +50,11 @@ function FaqCategorysHeader() {
 						inputProps={{
 							'aria-label': 'Search'
 						}}
-						onChange={(ev: ChangeEvent<HTMLInputElement>) => dispatch(setSearchText(ev))}
+						onChange={(ev: ChangeEvent<HTMLInputElement>) => {
+					
+							
+							dispatch(setSearchText(ev))
+						}}
 					/>
 				</Paper>
 				<motion.div

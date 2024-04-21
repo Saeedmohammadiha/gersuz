@@ -6,66 +6,66 @@ import { useFormContext } from 'react-hook-form';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import _ from '@lodash';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { FaqCategory, useCreateOrEditFaqCategoryMutation } from '../FaqCategorysApi';
-import { error } from 'console';
+import { useCreateOrEditFaqCategoryMutation, useDeleteFaqCategoryMutation } from '../FaqCategorysApi';
 
 /**
  * The FaqCategory header.
  */
 function FaqCategoryHeader() {
-	const routeParams = useParams();
-	const { FaqCategoryId } = routeParams;
-	const [createFaqCategory] = useCreateOrEditFaqCategoryMutation();
-
-	// const [createProduct] = useCreateECommerceProductMutation();
-	// const [saveProduct] = useUpdateECommerceProductMutation();
-	// const [removeProduct] = useDeleteECommerceProductMutation();
-
-	const methods = useFormContext();
-	const { formState, watch, getValues, handleSubmit } = methods;
-	const { isValid, dirtyFields } = formState;
-	console.log({ isValid });
-
+	const { FaqCategoryId } = useParams();
 	const theme = useTheme();
 	const navigate = useNavigate();
+	
+	const [createOrEditFaqCategory] = useCreateOrEditFaqCategoryMutation();
+	const [removeFaqCategory] = useDeleteFaqCategoryMutation();
 
-	//const {title, langTitle } = watch() as FaqCategory;
+	const methods = useFormContext();
+	const { formState, getValues, handleSubmit } = methods;
+	const { isValid, dirtyFields } = formState;
 
 	function handleSaveProduct() {
-		console.log(getValues());
-
-		//saveProduct(getValues() as EcommerceProduct);
-	}
-
-	function handleCreateFaqCategory(data) {
-		console.log(getValues());
-		console.log({data});
-		
-		
-		createFaqCategory({
-			//id: '1',
+		createOrEditFaqCategory({
+			id: FaqCategoryId,
 			languageId: getValues().language.value as number,
 			title: getValues().title,
 			displayPriority: getValues().displayPriority
 		})
+			.unwrap()
 			.then((res) => {
-				console.log(res);
+				navigate(`/admin/FaqCategorys`);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-
-		// createProduct(getValues() as EcommerceProduct)
-		// 	.unwrap()
-		// 	.then((data) => {
-		// 		navigate(`/apps/e-commerce/products/${data.id}`);
-		// 	});
 	}
 
-	// function handleRemoveProduct() {
-	// 	removeProduct(productId);
-	// 	navigate('/apps/e-commerce/products');
-	// }
+	function handleCreateFaqCategory(data) {
+		createOrEditFaqCategory({
+			languageId: getValues().language.value as number,
+			title: getValues().title,
+			displayPriority: getValues().displayPriority
+		})
+			.unwrap()
+			.then((res) => {
+				console.log(res);
+				navigate(`/admin/FaqCategorys/${res.body.id}`);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
+
+	function handleRemoveProduct() {
+		removeFaqCategory(FaqCategoryId)
+			.unwrap()
+			.then((res) => {
+				console.log({ res });
+				navigate('/admin/FaqCategorys');
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 
 	return (
 		<div className="flex flex-col sm:flex-row flex-1 w-full items-center justify-between space-y-8 sm:space-y-0 py-24 sm:py-32 px-24 md:px-32">
@@ -78,7 +78,7 @@ function FaqCategoryHeader() {
 						className="flex items-center sm:mb-12"
 						component={Link}
 						role="button"
-						to="/apps/e-commerce/products"
+						to="/admin/faqcategorys"
 						color="inherit"
 					>
 						<FuseSvgIcon size={20}>
@@ -138,8 +138,7 @@ function FaqCategoryHeader() {
 							className="whitespace-nowrap mx-4"
 							variant="contained"
 							color="secondary"
-							//onClick={handleRemoveProduct}
-							onClick={() => {}}
+							onClick={handleRemoveProduct}
 							startIcon={<FuseSvgIcon className="hidden sm:flex">heroicons-outline:trash</FuseSvgIcon>}
 						>
 							Remove
@@ -149,6 +148,7 @@ function FaqCategoryHeader() {
 							variant="contained"
 							color="secondary"
 							//disabled={_.isEmpty(dirtyFields) || !isValid}
+							disabled={!dirtyFields || !isValid}
 							onClick={handleSaveProduct}
 						>
 							Save
@@ -159,7 +159,7 @@ function FaqCategoryHeader() {
 						className="whitespace-nowrap mx-4"
 						variant="contained"
 						color="secondary"
-						//disabled={_.isEmpty(dirtyFields) || !isValid}
+						disabled={_.isEmpty(dirtyFields) || !isValid}
 						onClick={handleSubmit(handleCreateFaqCategory)}
 					>
 						Add

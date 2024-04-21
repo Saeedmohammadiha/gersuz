@@ -102,13 +102,13 @@ function BasicInfoTab() {
 				)}
 			/>
 			<Controller
-				name="DisplayPriority"
+				name="displayPriority"
 				control={control}
 				render={({ field }) => (
 					<TextField
 						{...field}
 						className="mt-8 mb-16"
-						id="DisplayPriority"
+						id="displayPriority"
 						label="DisplayPriority"
 						type="number"
 						variant="outlined"

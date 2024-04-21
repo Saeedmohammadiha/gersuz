@@ -47,7 +47,7 @@ const rows: rowType[] = [
 	},
 	{
 		id: 'displayPriority',
-		align: 'right',
+		align: 'left',
 		disablePadding: false,
 		label: 'Display Priority',
 		sort: true
@@ -64,31 +64,32 @@ type FaqCategorysTableHeadPropsType = {
 	};
 	rowCount: number;
 	onMenuItemClick: () => void;
+	setSelected: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 /**
  * The faqs table head component.
  */
 function FaqCategorysTableHead(props: FaqCategorysTableHeadPropsType) {
-	const { selectedFaqCategoryIds, tableOrder, onSelectAllClick, onRequestSort, rowCount, onMenuItemClick } = props;
+	const {
+		selectedFaqCategoryIds,
+		tableOrder,
+		onSelectAllClick,
+		onRequestSort,
+		rowCount,
+		onMenuItemClick,
+		setSelected
+	} = props;
 
 	const [removeFaq] = useDeleteFaqCategoryMutation();
 
 	const numSelected = selectedFaqCategoryIds.length;
 
-	const [selectedProductsMenu, setSelectedProductsMenu] = useState<HTMLButtonElement | null>(null);
+	const [selectedFaqCategorysMenu, setSelectedFaqCategorysMenu] = useState<HTMLButtonElement | null>(null);
 
 	const createSortHandler = (event: MouseEvent<HTMLSpanElement>, property: string) => {
 		onRequestSort(event, property);
 	};
-
-	function openSelectedProductsMenu(event: MouseEvent<HTMLButtonElement>) {
-		setSelectedProductsMenu(event.currentTarget);
-	}
-
-	function closeSelectedProductsMenu() {
-		setSelectedProductsMenu(null);
-	}
 
 	return (
 		<TableHead>
@@ -117,23 +118,24 @@ function FaqCategorysTableHead(props: FaqCategorysTableHeadPropsType) {
 						>
 							<IconButton
 								aria-haspopup="true"
-								onClick={openSelectedProductsMenu}
+								onClick={(event) => setSelectedFaqCategorysMenu(event.currentTarget)}
 								size="large"
 							>
 								<FuseSvgIcon>heroicons-outline:dots-horizontal</FuseSvgIcon>
 							</IconButton>
 							<Menu
-								id="selectedProductsMenu"
-								anchorEl={selectedProductsMenu}
-								open={Boolean(selectedProductsMenu)}
-								onClose={closeSelectedProductsMenu}
+								id="selectedFaqCategorysMenu"
+								anchorEl={selectedFaqCategorysMenu}
+								open={Boolean(selectedFaqCategorysMenu)}
+								onClose={() => setSelectedFaqCategorysMenu(null)}
 							>
 								<MenuList>
 									<MenuItem
 										onClick={() => {
-											removeFaq(selectedFaqCategoryIds);
+											//TODO: group deleting
+											removeFaq(selectedFaqCategoryIds)
 											onMenuItemClick();
-											closeSelectedProductsMenu();
+											setSelectedFaqCategorysMenu(null);
 										}}
 									>
 										<ListItemIcon className="min-w-40">

@@ -29,7 +29,7 @@ function LanguageSwitcher() {
 
 	function handleLanguageChange(lng: LanguageType) {
 		dispatch(changeLanguage(lng.id));
-
+//TODO: call to back to change the language 
 		langMenuClose();
 	}
 
