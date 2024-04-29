@@ -10,6 +10,8 @@ import Error404Page from '../main/404/Error404Page';
 // import AboutConfig from '../main/admin/About/AboutConfig';
 import FaqsConfig from '../main/admin/Faqs/FaqsConfig';
 import FaqCategorysConfig from '../main/admin/FaqCategorys/FaqCategorysConfig';
+import BlogCategorysConfig from '../main/admin/BlogCategory/BlogCategorysConfig';
+import BlogsConfig from '../main/admin/Blogs/BlogsConfig';
 
 const routeConfigs: FuseRouteConfigsType = [
 	SignOutConfig,
@@ -17,7 +19,9 @@ const routeConfigs: FuseRouteConfigsType = [
 	SignUpConfig,
 	//	AboutConfig,
 	FaqsConfig,
-	FaqCategorysConfig
+	FaqCategorysConfig,
+	BlogCategorysConfig,
+	BlogsConfig
 ];
 
 /**

@@ -43,6 +43,22 @@ const navigationConfig: FuseNavItemType[] = [
 				icon: 'heroicons-outline:academic-cap',
 				url: '/Admin/FaqCategorys',
 				translate: ''
+			},
+			{
+				id: 'Admin.BlogCategories',
+				title: 'Blog Categories',
+				type: 'item',
+				icon: 'heroicons-outline:academic-cap',
+				url: '/Admin/BlogCategorys',
+				translate: ''
+			},
+			{
+				id: 'Admin.Blogs',
+				title: 'Blogs',
+				type: 'item',
+				icon: 'heroicons-outline:academic-cap',
+				url: '/Admin/Blogs',
+				translate: ''
 			}
 			//   {
 			//     id: "Admin.calendar",
