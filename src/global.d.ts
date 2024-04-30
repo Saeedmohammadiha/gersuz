@@ -31,3 +31,10 @@ interface HotModule {
 }
 
 declare const module: HotModule;
+
+
+declare module '@ckeditor/ckeditor5-build-classic' {
+    const ClassicEditorBuild: any;
+
+    export = ClassicEditorBuild;
+}

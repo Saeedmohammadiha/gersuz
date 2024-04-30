@@ -5,6 +5,7 @@ import { useGetAllLanguageQuery } from '../../../languagesApi';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from 'react-i18next';
 import { useGetBlogCategorysQuery } from '../../../BlogCategory/BlogCategorysApi';
+import Edditorrr from 'app/shared-components/Editor';
 
 /**
  * The basic info tab.
@@ -67,7 +68,7 @@ function InfoTab() {
 					/>
 				)}
 			/>
-
+<Edditorrr/>
 			{/* <Controller
 				name="category"
 				control={control}
