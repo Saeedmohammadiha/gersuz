@@ -18,20 +18,20 @@ import { WithRouterProps } from '@fuse/core/withRouter/withRouter';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import FaqsTableHead from './FaqsTableHead';
-import { Faq, selectFilteredFaqs, useGetFaqsQuery } from './FaqApi';
+import { Faq, selectFilteredFaqs, useGetFaqsQuery } from './FaqsApi';
 
 type FaqsTableProps = WithRouterProps & {
 	navigate: (path: string) => void;
 };
 
 /**
- * The faqs table.
+ * The Faqs table.
  */
 function FaqsTable(props: FaqsTableProps) {
 	const { navigate } = props;
 
 	const { data, isLoading } = useGetFaqsQuery();
-	const faqs = useSelector(selectFilteredFaqs(data));
+	const Faqs = useSelector(selectFilteredFaqs(data));
 
 	const [selected, setSelected] = useState<Faq['id'][]>([]);
 
@@ -60,7 +60,7 @@ function FaqsTable(props: FaqsTableProps) {
 
 	function handleSelectAllClick(event: ChangeEvent<HTMLInputElement>) {
 		if (event.target.checked) {
-			setSelected(faqs.map((n) => n.id));
+			setSelected(Faqs.map((n) => n.id));
 			return;
 		}
 
@@ -73,7 +73,7 @@ function FaqsTable(props: FaqsTableProps) {
 
 	function handleClick(item: Faq) {
 		//TODO: chnge route
-		navigate(`/apps/e-commerce/products/${item.id}`);
+		navigate(`/admin/Faqs/${item.id}`);
 	}
 
 	function handleCheck(event: ChangeEvent<HTMLInputElement>, id: string) {
@@ -109,7 +109,7 @@ function FaqsTable(props: FaqsTableProps) {
 		);
 	}
 
-	if (faqs?.length === 0) {
+	if (Faqs?.length === 0) {
 		return (
 			<motion.div
 				initial={{ opacity: 0 }}
@@ -120,7 +120,7 @@ function FaqsTable(props: FaqsTableProps) {
 					color="text.secondary"
 					variant="h5"
 				>
-					There are no faqs!
+					There are no Faq !
 				</Typography>
 			</motion.div>
 		);
@@ -139,18 +139,20 @@ function FaqsTable(props: FaqsTableProps) {
 						tableOrder={tableOrder}
 						onSelectAllClick={handleSelectAllClick}
 						onRequestSort={handleRequestSort}
-						rowCount={faqs.length}
+						rowCount={Faqs.length}
 						onMenuItemClick={handleDeselect}
+						setSelected={setSelected}
 					/>
 
 					<TableBody>
 						{_.orderBy(
-							faqs,
+							Faqs,
 							[
 								(o: Faq) => {
 									switch (o.id) {
+										//TODO: need to customize
 										case 'categories': {
-											return o.faqCategoryTitle[0];
+											return o.faqCategoryId;
 										}
 										default: {
 											return o.id;
@@ -162,6 +164,8 @@ function FaqsTable(props: FaqsTableProps) {
 						)
 							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 							.map((n: Faq) => {
+								console.log(n);
+
 								const isSelected = selected.indexOf(n.id) !== -1;
 								return (
 									<TableRow
@@ -185,27 +189,6 @@ function FaqsTable(props: FaqsTableProps) {
 											/>
 										</TableCell>
 
-										{/* <TableCell
-											className="w-52 px-4 md:px-0"
-											component="th"
-											scope="row"
-											padding="none"
-										>
-											{n?.images?.length > 0 && n.featuredImageid ? (
-												<img
-													className="w-full block rounded"
-													src={_.find(n.images, { id: n.featuredImageid })?.url}
-													alt={n.name}
-												/>
-											) : (
-												<img
-													className="w-full block rounded"
-													src="assets/images/apps/ecommerce/product-image-placeholder.png"
-													alt={n.name}
-												/>
-											)}
-										</TableCell> */}
-
 										<TableCell
 											className="p-4 md:p-16"
 											component="th"
@@ -213,71 +196,35 @@ function FaqsTable(props: FaqsTableProps) {
 										>
 											{n.faqCategoryTitle}
 										</TableCell>
-
-										{/* <TableCell
-											className="p-4 md:p-16 truncate"
+										<TableCell
+											className="p-4 md:p-16"
 											component="th"
 											scope="row"
 										>
-											{n.categories.join(', ')}
-										</TableCell> */}
+											{n.langTitle}
+										</TableCell>
 
 										<TableCell
 											className="p-4 md:p-16"
 											component="th"
 											scope="row"
-											align="right"
 										>
 											{n.displayPriority}
 										</TableCell>
-
 										<TableCell
 											className="p-4 md:p-16"
 											component="th"
 											scope="row"
-											align="right"
 										>
 											{n.question}
-											{/* <i
-												className={clsx(
-													'inline-block w-8 h-8 rounded mx-8',
-													n.quantity <= 5 && 'bg-red',
-													n.quantity > 5 && n.quantity <= 25 && 'bg-orange',
-													n.quantity > 25 && 'bg-green'
-												)}
-											/> */}
 										</TableCell>
 										<TableCell
 											className="p-4 md:p-16"
 											component="th"
 											scope="row"
-											align="right"
 										>
 											{n.response}
 										</TableCell>
-
-										{/* <TableCell
-											className="p-4 md:p-16"
-											component="th"
-											scope="row"
-											align="right"
-										>
-											{n.active ? (
-												<FuseSvgIcon
-													className="text-green"
-													size={20}
-												>
-													heroicons-outline:check-circle
-												</FuseSvgIcon>
-											) : (
-												<FuseSvgIcon
-													className="text-red"
-													size={20}
-												>
-													heroicons-outline:minus-circle
-												</FuseSvgIcon>
-											)}
-										</TableCell> */}
 									</TableRow>
 								);
 							})}
@@ -288,7 +235,7 @@ function FaqsTable(props: FaqsTableProps) {
 			<TablePagination
 				className="shrink-0 border-t-1"
 				component="div"
-				count={faqs.length}
+				count={Faqs.length}
 				rowsPerPage={rowsPerPage}
 				page={page}
 				backIconButtonProps={{

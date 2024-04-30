@@ -14,7 +14,7 @@ import Box from '@mui/material/Box';
 import TableHead from '@mui/material/TableHead';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { lighten } from '@mui/material/styles';
-import { useDeleteFaqMutation } from './FaqApi';
+import { useDeleteFaqMutation } from './FaqsApi';
 
 /**
  * The table head row type.
@@ -31,48 +31,41 @@ type rowType = {
  * The table head rows data.
  */
 const rows: rowType[] = [
-	// {
-	// 	id: 'image',
-	// 	align: 'left',
-	// 	disablePadding: true,
-	// 	label: '',
-	// 	sort: false
-	// },
 	{
-		id: 'name',
+		id: 'FAQCategory',
 		align: 'left',
 		disablePadding: false,
-		label: 'Name',
+		label: 'FAQ Category ',
 		sort: true
 	},
 	{
-		id: 'categories',
+		id: 'language',
 		align: 'left',
 		disablePadding: false,
-		label: 'Category',
+		label: 'Language',
+		sort: true
+	},
+	{
+		id: 'displayPriority',
+		align: 'left',
+		disablePadding: false,
+		label: 'Display Priority',
 		sort: true
 	},
 	{
 		id: 'question',
-		align: 'right',
+		align: 'left',
 		disablePadding: false,
 		label: 'Question',
 		sort: true
 	},
 	{
-		id: 'answer',
-		align: 'right',
+		id: 'response',
+		align: 'left',
 		disablePadding: false,
-		label: 'Answer',
+		label: 'Response',
 		sort: true
 	},
-	// {
-	// 	id: 'active',
-	// 	align: 'right',
-	// 	disablePadding: false,
-	// 	label: 'Active',
-	// 	sort: true
-	// }
 ];
 
 type FaqsTableHeadPropsType = {
@@ -85,31 +78,25 @@ type FaqsTableHeadPropsType = {
 	};
 	rowCount: number;
 	onMenuItemClick: () => void;
+	setSelected: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 /**
  * The faqs table head component.
  */
 function FaqsTableHead(props: FaqsTableHeadPropsType) {
-	const { selectedFaqIds, tableOrder, onSelectAllClick, onRequestSort, rowCount, onMenuItemClick } = props;
+	const { selectedFaqIds, tableOrder, onSelectAllClick, onRequestSort, rowCount, onMenuItemClick, setSelected } =
+		props;
 
 	const [removeFaq] = useDeleteFaqMutation();
 
 	const numSelected = selectedFaqIds.length;
 
-	const [selectedProductsMenu, setSelectedProductsMenu] = useState<HTMLButtonElement | null>(null);
+	const [selectedFaqsMenu, setSelectedFaqsMenu] = useState<HTMLButtonElement | null>(null);
 
 	const createSortHandler = (event: MouseEvent<HTMLSpanElement>, property: string) => {
 		onRequestSort(event, property);
 	};
-
-	function openSelectedProductsMenu(event: MouseEvent<HTMLButtonElement>) {
-		setSelectedProductsMenu(event.currentTarget);
-	}
-
-	function closeSelectedProductsMenu() {
-		setSelectedProductsMenu(null);
-	}
 
 	return (
 		<TableHead>
@@ -138,23 +125,24 @@ function FaqsTableHead(props: FaqsTableHeadPropsType) {
 						>
 							<IconButton
 								aria-haspopup="true"
-								onClick={openSelectedProductsMenu}
+								onClick={(event) => setSelectedFaqsMenu(event.currentTarget)}
 								size="large"
 							>
 								<FuseSvgIcon>heroicons-outline:dots-horizontal</FuseSvgIcon>
 							</IconButton>
 							<Menu
-								id="selectedProductsMenu"
-								anchorEl={selectedProductsMenu}
-								open={Boolean(selectedProductsMenu)}
-								onClose={closeSelectedProductsMenu}
+								id="selectedFaqsMenu"
+								anchorEl={selectedFaqsMenu}
+								open={Boolean(selectedFaqsMenu)}
+								onClose={() => setSelectedFaqsMenu(null)}
 							>
 								<MenuList>
 									<MenuItem
 										onClick={() => {
+											//TODO: group deleting
 											removeFaq(selectedFaqIds);
 											onMenuItemClick();
-											closeSelectedProductsMenu();
+											setSelectedFaqsMenu(null);
 										}}
 									>
 										<ListItemIcon className="min-w-40">

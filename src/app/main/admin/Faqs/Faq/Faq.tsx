@@ -10,19 +10,27 @@ import { Link, useParams } from 'react-router-dom';
 import _ from '@lodash';
 import { FormProvider, useForm } from 'react-hook-form';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
-import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import FaqHeader from './FaqHeader';
-import BasicInfoTab from './tabs/BasicInfoTab';
+import InfoTab from './tabs/InfoTab';
 
-import { useGetFaqByIdQuery } from '../FaqApi';
+import { useGetFaqByIdQuery } from '../FaqsApi';
 
 /**
  * Form Validation Schema
  */
 const schema = z.object({
-	name: z.string().nonempty('You must enter a Faq name').min(5, 'The Faq name must be at least 5 characters')
+	//language: z.object({label: z.string(), value: z.string()}).required(),
+	// title: z
+	// 	.string({
+	// 		required_error: 'Title is required'
+	// 	})
+	// 	.max(80, { message: 'title is too long' }),
+	// displayPriority: z.string({
+	// 	required_error: 'Display Priority is required',
+	// 	invalid_type_error: 'Display Priority must be a number'
+	// })
 });
 
 /**
@@ -30,11 +38,8 @@ const schema = z.object({
  */
 function Faq() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
-
-	const routeParams = useParams();
-
-	const { FaqId } = routeParams;
-	
+	const { FaqId } = useParams();
+	const [tabValue, setTabValue] = useState(0);
 
 	const {
 		data: Faq,
@@ -44,18 +49,14 @@ function Faq() {
 		skip: !FaqId || FaqId === 'new'
 	});
 
-	const [tabValue, setTabValue] = useState(0);
-
 	const methods = useForm({
 		mode: 'onChange',
-		defaultValues: {},
+		defaultValues: { language: { label: 'en-US', value: '1' }, ...Faq },
 		resolver: zodResolver(schema)
 	});
 
 	const { reset, watch } = methods;
-
 	const form = watch();
-
 	useEffect(() => {
 		if (FaqId === 'new') {
 			reset({});
@@ -64,20 +65,20 @@ function Faq() {
 
 	useEffect(() => {
 		if (Faq) {
-			reset({ ...Faq });
+			reset({
+				language: {
+					label: Faq?.langTitle,
+					value: Faq?.languageId.toString()
+				},
+				question: Faq.question,
+				response: Faq.response,
+
+				displayPriority: Faq.displayPriority
+			});
 		}
 	}, [Faq, reset]);
 
-	/**
-	 * Tab Change
-	 */
-	function handleTabChange(event: SyntheticEvent, value: number) {
-		setTabValue(value);
-	}
-
-	if (isLoading) {
-		return <FuseLoading />;
-	}
+	if (isLoading) return <FuseLoading />;
 
 	/**
 	 * Show Message if the requested products is not exists
@@ -93,27 +94,21 @@ function Faq() {
 					color="text.secondary"
 					variant="h5"
 				>
-					There is no such product!
+					There is no such Faq !
 				</Typography>
 				<Button
 					className="mt-24"
 					component={Link}
 					variant="outlined"
-					to="/apps/e-commerce/products"
+					//TODO: change rout
+					to="/Admin/Faqs"
 					color="inherit"
 				>
-					Go to Products Page
+					Go to Faq Page
 				</Button>
 			</motion.div>
 		);
 	}
-
-	/**
-	 * Wait while product data is loading and form is setted
-	 */
-	// if (_.isEmpty(form) || (FaqId && routeParams.productId !== Faq.Id && routeParams.FaqId !== 'new')) {
-	// 	return <FuseLoading />;
-	// }
 
 	return (
 		<FormProvider {...methods}>
@@ -123,7 +118,7 @@ function Faq() {
 					<>
 						<Tabs
 							value={tabValue}
-							onChange={handleTabChange}
+							onChange={(e: SyntheticEvent, value: number) => setTabValue(value)}
 							indicatorColor="secondary"
 							textColor="secondary"
 							variant="scrollable"
@@ -132,45 +127,13 @@ function Faq() {
 						>
 							<Tab
 								className="h-64"
-								label="Basic Info"
+								label="Info"
 							/>
-							{/* <Tab
-								className="h-64"
-								label="Product Images"
-							/>
-							<Tab
-								className="h-64"
-								label="Pricing"
-							/>
-							<Tab
-								className="h-64"
-								label="Inventory"
-							/>
-							<Tab
-								className="h-64"
-								label="Shipping"
-							/> */}
 						</Tabs>
 						<div className="p-16 sm:p-24 max-w-3xl">
 							<div className={tabValue !== 0 ? 'hidden' : ''}>
-								<BasicInfoTab />
+								<InfoTab />
 							</div>
-
-							{/* <div className={tabValue !== 1 ? 'hidden' : ''}>
-								<ProductImagesTab />
-							</div>
-
-							<div className={tabValue !== 2 ? 'hidden' : ''}>
-								<PricingTab />
-							</div>
-
-							<div className={tabValue !== 3 ? 'hidden' : ''}>
-								<InventoryTab />
-							</div>
-
-							<div className={tabValue !== 4 ? 'hidden' : ''}>
-								<ShippingTab />
-							</div> */}
 						</div>
 					</>
 				}
