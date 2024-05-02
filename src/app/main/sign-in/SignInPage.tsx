@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import CardContent from '@mui/material/CardContent';
 import Alert from '@mui/material/Alert';
 import JwtLoginTab from './tabs/JwtSignInTab';
+import { useGetWelcomTextQuery } from './WelcomeSettingApi';
 
 // const tabs = [
 // 	{
@@ -31,13 +32,15 @@ function SignInPage() {
 	// 	setSelectedTabId(id);
 	// }
 
+	const { data: welcomeText, isLoading } = useGetWelcomTextQuery('signIn');
+
 	return (
 		<div className="flex min-w-0 flex-1 flex-col items-center sm:flex-row sm:justify-center md:items-start md:justify-start">
 			<Paper className="h-full w-full px-16 py-8 ltr:border-r-1 rtl:border-l-1 sm:h-auto sm:w-auto sm:rounded-2xl sm:p-48 sm:shadow md:flex md:h-full md:w-1/2 md:items-center md:justify-end md:rounded-none md:p-64 md:shadow-none">
 				<CardContent className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
 					<img
 						className="w-48"
-						src="assets/images/logo/logo.svg"
+						src="assets/images/logo/logo-gersuz/gersuz_Logo_FavIcon.webp"
 						alt="logo"
 					/>
 
@@ -212,6 +215,9 @@ function SignInPage() {
 						Fuse helps developers to build organized and well coded dashboards full of beautiful and rich
 						modules. Join us and start building your application today.
 					</div> */}
+					<div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
+						{welcomeText?.body?.description}
+					</div>
 					<div className="mt-32 flex items-center">
 						{/* <AvatarGroup
 							sx={{

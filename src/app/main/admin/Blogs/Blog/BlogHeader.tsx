@@ -24,12 +24,17 @@ function BlogHeader() {
 	const { isValid, dirtyFields } = formState;
 
 	function handleSaveProduct() {
-		createOrEditBlog({
-			id: BlogId,
-			languageId: getValues().language.value as number,
-			languageTitle: getValues().language.label,
-			title: getValues().title
-		})
+		const formDate = new FormData();
+		formDate.append('id', BlogId);
+		formDate.append('languageId', getValues().language.value);
+		formDate.append('languageTitle', getValues().language.label);
+		formDate.append('blogCategoryId', getValues().blogCategory.value);
+		formDate.append('blogCategory', getValues().blogCategory.label);
+		formDate.append('title', getValues().title);
+		formDate.append('image', getValues().images?.[0]);
+		formDate.append('description', getValues().description);
+
+		createOrEditBlog(formDate)
 			.unwrap()
 			.then((res) => {
 				navigate(`/admin/Blogs`);
@@ -40,14 +45,20 @@ function BlogHeader() {
 	}
 
 	function handleCreateBlog(data) {
-		createOrEditBlog({
-			languageId: getValues().language.value as number,
-			title: getValues().title,
-			languageTitle: getValues().language.label
-		})
+		console.log(getValues());
+		
+		const formDate = new FormData();
+		formDate.append('languageId', getValues().language.value);
+		formDate.append('languageTitle', getValues().language.label);
+		formDate.append('blogCategoryId', getValues().blogCategory.value);
+		formDate.append('blogCategory', getValues().blogCategory.label);
+		formDate.append('title', getValues().title);
+		formDate.append('Image', getValues().images?.[0]);
+		formDate.append('description', getValues().description);
+
+		createOrEditBlog(formDate)
 			.unwrap()
 			.then((res) => {
-				console.log(res);
 				navigate(`/admin/Blogs/${res.body.id}`);
 			})
 			.catch((err) => {
@@ -59,7 +70,6 @@ function BlogHeader() {
 		removeBlog(BlogId)
 			.unwrap()
 			.then((res) => {
-				console.log({ res });
 				navigate('/admin/Blogs');
 			})
 			.catch((err) => {
@@ -122,7 +132,7 @@ function BlogHeader() {
 							variant="caption"
 							className="font-medium"
 						>
-							Blog  Detail
+							Blog Detail
 						</Typography>
 					</motion.div>
 				</div>

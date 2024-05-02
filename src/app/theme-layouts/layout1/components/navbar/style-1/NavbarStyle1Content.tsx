@@ -63,7 +63,7 @@ function NavbarStyle1Content(props: NavbarStyle1ContentProps) {
 				<div className="flex-0 flex items-center justify-center py-48 opacity-10">
 					<img
 						className="w-full max-w-64"
-						src="assets/images/logo/logo.svg"
+						src="assets/images/logo/logo-gersuz/gersuz_Logo_FavIcon.webp"
 						alt="footer logo"
 					/>
 				</div>

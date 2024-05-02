@@ -12,7 +12,7 @@ function FuseSplashScreen() {
 			<div className="logo">
 				<img
 					width="128"
-					src="assets/images/logo/logo.svg"
+					src="assets/images/logo/logo-gersuz/gersuz_Logo_FavIcon.webp"
 					alt="logo"
 				/>
 			</div>

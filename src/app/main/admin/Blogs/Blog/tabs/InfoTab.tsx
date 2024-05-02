@@ -5,7 +5,7 @@ import { useGetAllLanguageQuery } from '../../../languagesApi';
 import FuseLoading from '@fuse/core/FuseLoading';
 import { useTranslation } from 'react-i18next';
 import { useGetBlogCategorysQuery } from '../../../BlogCategory/BlogCategorysApi';
-import Edditorrr from 'app/shared-components/Editor';
+import TextEditor from 'app/shared-components/TextEditor';
 
 /**
  * The basic info tab.
@@ -23,14 +23,14 @@ function InfoTab() {
 
 	return (
 		<div>
-			{/* <Controller
+			<Controller
 				name="language"
 				control={control}
 				render={({ field: { onChange, value } }) => (
 					<Autocomplete
 						className="mt-8 mb-16"
 						value={value as { label: string; value: string }}
-						options={languages.map((l) => ({ label: l.languageTitle, value: l.id }))}
+						options={languages?.map((l) => ({ label: l.languageTitle, value: l.id }))}
 						defaultValue={{ label: 'en-US', value: '1' }}
 						onChange={(event, newValue) => {
 							onChange(newValue);
@@ -49,7 +49,7 @@ function InfoTab() {
 						)}
 					/>
 				)}
-			/> */}
+			/>
 
 			<Controller
 				name="title"
@@ -68,9 +68,8 @@ function InfoTab() {
 					/>
 				)}
 			/>
-<Edditorrr/>
-			{/* <Controller
-				name="category"
+			<Controller
+				name="blogCategory"
 				control={control}
 				render={({ field: { onChange, value } }) => (
 					<Autocomplete
@@ -91,8 +90,12 @@ function InfoTab() {
 						)}
 					/>
 				)}
-			/> */}
-
+			/>
+			<Controller
+				name="description"
+				control={control}
+				render={({ field }) => <TextEditor handleChange={(value) => field.onChange(value)} />}
+			/>
 		</div>
 	);
 }

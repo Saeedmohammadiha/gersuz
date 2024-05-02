@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-ckeditor5-custom-build/node_modules
+ckeditor5/node_modules
 /.yarn
 
 # testing

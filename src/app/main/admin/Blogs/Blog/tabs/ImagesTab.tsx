@@ -85,6 +85,8 @@ function ImagesTab() {
 									function readFileAsync() {
 										return new Promise((resolve, reject) => {
 											const file = e?.target?.files?.[0];
+											console.log(file);
+
 											if (!file) {
 												return;
 											}
@@ -106,7 +108,7 @@ function ImagesTab() {
 
 									const newImage = await readFileAsync();
 
-									onChange([newImage, ...(value as ImageType[])]);
+									onChange([newImage]);
 								}}
 							/>
 							<FuseSvgIcon
@@ -119,7 +121,7 @@ function ImagesTab() {
 					)}
 				/>
 				<Controller
-					name="featuredImageId"
+					name="blogImage"
 					control={control}
 					defaultValue=""
 					render={({ field: { onChange, value } }) => {
@@ -137,9 +139,7 @@ function ImagesTab() {
 										)}
 										key={media.id}
 									>
-										<FuseSvgIcon className="ImageFeaturedStar">
-											heroicons-solid:star
-										</FuseSvgIcon>
+										<FuseSvgIcon className="ImageFeaturedStar">heroicons-solid:star</FuseSvgIcon>
 										<img
 											className="max-w-none w-auto h-full"
 											src={media.url}

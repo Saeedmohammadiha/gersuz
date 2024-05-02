@@ -2,6 +2,7 @@ import { apiService as api } from 'app/store/apiService';
 import { createSelector } from '@reduxjs/toolkit';
 import FuseUtils from '@fuse/utils';
 import { selectSearchText } from '../store/searchTextSlice';
+import { OptionalProperty } from '../Faqs/FaqsApi';
 
 export const addTagTypes = ['Blogs', 'Blog', 'BlogsLanding'] as const;
 export const urls = {
@@ -19,12 +20,9 @@ export type Blog = {
 	languageId: number;
 	languageTitle: string;
 	Image: File;
-	ImageUrl: string;
-	ImagePatch: string;
 	Description: string;
 	BlogCategoryId: string;
 	BlogCategory: string;
-	CreatedDateTime: Date;
 };
 
 const BlogApi = api
@@ -83,14 +81,25 @@ export type BlogApiType = {
 	[BlogApi.reducerPath]: ReturnType<typeof BlogApi.reducer>;
 };
 
+type BlogRes = {
+	id: string;
+	title: string;
+	languageId: number;
+	languageTitle: string;
+	imageUrl: string;
+	description: string;
+	blogCategoryId: string;
+	blogCategory: string;
+};
+
 export type BlogApiResponse = {
 	code: string;
 	message: string;
 	status: string;
-	body: Blog;
+	body: BlogRes;
 };
-export type GetAllBlogApiResponse = Blog[];
-export type GetBlogByIdApiResponse = Blog;
+export type GetAllBlogApiResponse = BlogRes[];
+export type GetBlogByIdApiResponse = BlogRes;
 export type DeleteBlogApiResponse = {
 	code: string;
 	message: string;
@@ -102,12 +111,8 @@ export type GetBlogsApiArg = void;
 //TODO: group deleting
 export type DeleteBlogApiArg = string[] | string;
 export type GetBlogByIdApiArg = string;
-export type CreateOrEditBlogApiArg = {
-	id?: string;
-	title: string;
-	languageId: number;
-	languageTitle: string;
-};
+//export type CreateOrEditBlogApiArg =  OptionalProperty<Blog, "id">
+export type CreateOrEditBlogApiArg = FormData;
 
 /**
  * Select filtered Blogs
