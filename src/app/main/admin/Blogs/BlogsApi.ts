@@ -81,7 +81,7 @@ export type BlogApiType = {
 	[BlogApi.reducerPath]: ReturnType<typeof BlogApi.reducer>;
 };
 
-type BlogRes = {
+export type BlogRes = {
 	id: string;
 	title: string;
 	languageId: number;
@@ -117,11 +117,11 @@ export type CreateOrEditBlogApiArg = FormData;
 /**
  * Select filtered Blogs
  */
-export const selectFilteredBlogs = (Blogs: Blog[]) => {
+export const selectFilteredBlogs = (Blogs: BlogRes[]) => {
 	return createSelector([selectSearchText], (searchText) => {
 		if (searchText?.length === 0) {
 			return Blogs;
 		}
-		return FuseUtils.filterArrayByString<Blog>(Blogs, searchText);
+		return FuseUtils.filterArrayByString<BlogRes>(Blogs, searchText);
 	});
 };

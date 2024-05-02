@@ -18,7 +18,7 @@ import { WithRouterProps } from '@fuse/core/withRouter/withRouter';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import BlogsTableHead from './BlogsTableHead';
-import { Blog, selectFilteredBlogs, useGetBlogsQuery } from './BlogsApi';
+import { Blog, BlogRes, selectFilteredBlogs, useGetBlogsQuery } from './BlogsApi';
 
 type BlogsTableProps = WithRouterProps & {
 	navigate: (path: string) => void;
@@ -71,7 +71,7 @@ function BlogsTable(props: BlogsTableProps) {
 		setSelected([]);
 	}
 
-	function handleClick(item: Blog) {
+	function handleClick(item: BlogRes) {
 		//TODO: chnge route
 		navigate(`/admin/Blogs/${item.id}`);
 	}
@@ -163,7 +163,7 @@ function BlogsTable(props: BlogsTableProps) {
 							[tableOrder.direction] as Many<boolean | 'asc' | 'desc'>
 						)
 							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							.map((n: Blog) => {
+							.map((n: BlogRes) => {
 								const isSelected = selected.indexOf(n.id) !== -1;
 								return (
 									<TableRow
