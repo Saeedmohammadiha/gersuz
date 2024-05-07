@@ -24,14 +24,18 @@ function BlogHeader() {
 	const { isValid, dirtyFields } = formState;
 
 	function handleSaveProduct() {
+		
+		const img = dataURLtoFile(
+			getValues().images?.[0].url,
+			`${getValues().images?.[0].name}${getValues().images?.[0].type}`
+		);
 		const formDate = new FormData();
-		formDate.append('id', BlogId);
 		formDate.append('languageId', getValues().language.value);
 		formDate.append('languageTitle', getValues().language.label);
 		formDate.append('blogCategoryId', getValues().blogCategory.value);
 		formDate.append('blogCategory', getValues().blogCategory.label);
 		formDate.append('title', getValues().title);
-		formDate.append('image', getValues().images?.[0]);
+		formDate.append('imageFile', img);
 		formDate.append('description', getValues().description);
 
 		createOrEditBlog(formDate)
@@ -44,16 +48,30 @@ function BlogHeader() {
 			});
 	}
 
+	function dataURLtoFile(dataurl, filename) {
+		var arr = dataurl.split(','),
+			mime = arr[0].match(/:(.*?);/)[1],
+			bstr = atob(arr[1]),
+			n = bstr.length,
+			u8arr = new Uint8Array(n);
+		while (n--) {
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+		return new File([u8arr], filename, { type: mime });
+	}
+
 	function handleCreateBlog(data) {
-		console.log(getValues());
-		
+		const img = dataURLtoFile(
+			getValues().images?.[0].url,
+			`${getValues().images?.[0].name}${getValues().images?.[0].type}`
+		);
 		const formDate = new FormData();
 		formDate.append('languageId', getValues().language.value);
 		formDate.append('languageTitle', getValues().language.label);
 		formDate.append('blogCategoryId', getValues().blogCategory.value);
 		formDate.append('blogCategory', getValues().blogCategory.label);
 		formDate.append('title', getValues().title);
-		formDate.append('Image', getValues().images?.[0]);
+		formDate.append('imageFile', img);
 		formDate.append('description', getValues().description);
 
 		createOrEditBlog(formDate)

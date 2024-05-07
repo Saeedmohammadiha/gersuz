@@ -68,7 +68,8 @@ function Blog() {
 					label: Blog?.languageTitle,
 					value: Blog?.languageId.toString()
 				},
-				title: Blog.title
+				title: Blog.title,
+				
 			});
 		}
 	}, [Blog, reset]);

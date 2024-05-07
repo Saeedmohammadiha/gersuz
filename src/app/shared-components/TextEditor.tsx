@@ -12,7 +12,7 @@ export default function TextEditor({ handleChange }: { handleChange: (data: stri
 						body.append('upload', file);
 
 						axios
-							.post(`${'API_URL'}`, body)
+							.post(`${'https://test.gersuz.com/api/Blog/BlogFileUploadi'}`, body)
 							.then((res) => {
 								resolve({
 									default: res.data.url
@@ -36,11 +36,10 @@ export default function TextEditor({ handleChange }: { handleChange: (data: stri
 			editor={Editor}
 			config={{
 				extraPlugins: [uploadPlugin],
-				BaseHref: 'https://test.gersuz.com/api'
+				BaseHref: 'https://test.gersuz.com/api/Blog/BlogFileUploadi'
 			}}
 			data=""
 			onReady={(editor) => {
-				// You can store the "editor" and use when it is needed.
 				console.log('Editor is ready to use!', editor);
 			}}
 			onChange={(event, editor) => {
